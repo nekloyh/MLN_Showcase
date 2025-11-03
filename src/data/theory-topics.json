@@ -1,0 +1,104 @@
+[
+  {
+    "id": "hanghoa",
+    "title": "Hàng Hóa và Giá Trị",
+    "titleEn": "Commodities and Value",
+    "content": [
+      "Hàng hóa là sản phẩm lao động được sản xuất ra để trao đổi, mua bán. Hàng hóa có hai thuộc tính cơ bản: giá trị sử dụng và giá trị.",
+      "Giá trị sử dụng là tính hữu ích của hàng hóa, khả năng thỏa mãn nhu cầu nào đó của con người. Giá trị sử dụng là nội dung vật chất của sự giàu có.",
+      "Giá trị là lao động xã hội kết tinh trong hàng hóa. Giá trị được đo bằng thời gian lao động xã hội cần thiết để sản xuất ra hàng hóa đó.",
+      "Lao động sản xuất hàng hóa có tính hai mặt: lao động cụ thể và lao động trừu tượng. Lao động cụ thể tạo ra giá trị sử dụng, lao động trừu tượng tạo ra giá trị."
+    ],
+    "keyPoints": [
+      "Hàng hóa = Giá trị sử dụng + Giá trị",
+      "Giá trị được xác định bởi lao động xã hội cần thiết",
+      "Lao động cụ thể không bằng Lao động trừu tượng",
+      "Giá trị là cơ sở của giá cả"
+    ]
+  },
+  {
+    "id": "tiente",
+    "title": "Tiền Tệ và Chức Năng",
+    "titleEn": "Currency and Functions",
+    "content": [
+      "Tiền tệ là hàng hóa đặc biệt, được tách ra khỏi thế giới hàng hóa để làm vật ngang giá chung. Tiền tệ là sản phẩm tất yếu của sự phát triển sản xuất hàng hóa và trao đổi hàng hóa.",
+      "Bản chất của tiền tệ là biểu hiện quan hệ sản xuất giữa những người sản xuất hàng hóa thông qua vật.",
+      "Tiền tệ có 5 chức năng cơ bản: thước đo giá trị, phương tiện lưu thông, phương tiện tích trữ, phương tiện thanh toán, và tiền tệ thế giới.",
+      "Trong nền kinh tế hiện đại, tiền tệ phát triển thành tiền giấy, tiền tín dụng và tiền điện tử, nhưng bản chất vẫn là biểu hiện quan hệ xã hội."
+    ],
+    "keyPoints": [
+      "Tiền tệ = Hàng hóa đặc biệt làm vật ngang giá chung",
+      "5 chức năng: Đo lường, Lưu thông, Tích trữ, Thanh toán, Thế giới",
+      "Tiền tệ biểu hiện quan hệ sản xuất xã hội",
+      "Hình thái tiền tệ phát triển theo thời gian"
+    ]
+  },
+  {
+    "id": "thitruong",
+    "title": "Thị Trường và Cơ Chế Thị Trường",
+    "titleEn": "Market and Market Mechanism",
+    "content": [
+      "Thị trường là nơi diễn ra các quan hệ trao đổi, mua bán hàng hóa giữa người mua và người bán. Thị trường bao gồm cả không gian vật chất và quan hệ kinh tế.",
+      "Cơ chế thị trường là sự tác động qua lại giữa các yếu tố cơ bản: cung, cầu và giá cả. Cung cầu quyết định giá cả, và giá cả điều tiết cung cầu.",
+      "Thị trường có nhiều loại: thị trường hàng hóa dịch vụ, thị trường lao động, thị trường vốn, thị trường bất động sản, và các thị trường khác.",
+      "Vai trò của thị trường: phân bổ nguồn lực, thúc đẩy cạnh tranh, điều tiết sản xuất kinh doanh, tạo động lực phát triển kinh tế."
+    ],
+    "keyPoints": [
+      "Thị trường = Nơi diễn ra trao đổi mua bán",
+      "Cơ chế: Cung tương tác Cầu tương tác Giá cả",
+      "Nhiều loại thị trường khác nhau",
+      "Phân bổ nguồn lực và thúc đẩy phát triển"
+    ]
+  },
+  {
+    "id": "quyluatkinhte",
+    "title": "Quy Luật Kinh Tế của Sản Xuất Hàng Hóa",
+    "titleEn": "Economic Laws of Commodity Production",
+    "content": [
+      "Quy luật giá trị: Hàng hóa trao đổi theo nguyên tắc có đổi có, bằng giá trị với bằng giá trị. Cơ sở của quy luật là lao động xã hội cần thiết.",
+      "Quy luật cung cầu: Mối quan hệ giữa cung và cầu quyết định giá cả thị trường. Khi cầu lớn hơn cung, giá tăng; khi cung lớn hơn cầu, giá giảm.",
+      "Quy luật cạnh tranh: Các nhà sản xuất hàng hóa cạnh tranh với nhau để giành thị trường. Cạnh tranh thúc đẩy cải tiến kỹ thuật, nâng cao năng suất lao động.",
+      "Những quy luật này tác động khách quan, không phụ thuộc vào ý chí con người. Nhận thức và vận dụng đúng các quy luật sẽ đạt hiệu quả kinh tế cao."
+    ],
+    "keyPoints": [
+      "Quy luật giá trị: Trao đổi theo giá trị lao động",
+      "Quy luật cung cầu: Điều tiết giá cả thị trường",
+      "Quy luật cạnh tranh: Thúc đẩy cải tiến",
+      "Các quy luật tác động khách quan"
+    ]
+  },
+  {
+    "id": "giatrithanhdư",
+    "title": "Giá Trị Thặng Dư",
+    "titleEn": "Surplus Value",
+    "content": [
+      "Giá trị thặng dư là phần giá trị mới do công nhân làm thuê tạo ra vượt quá giá trị sức lao động của họ mà bị nhà tư bản chiếm đoạt không công.",
+      "Công thức: M = C + V + M, trong đó C là tư bản bất biến, V là tư bản khả biến, M là giá trị thặng dư.",
+      "Có hai hình thức tăng giá trị thặng dư: giá trị thặng dư tuyệt đối (kéo dài thời gian lao động) và giá trị thặng dư tương đối (tăng năng suất lao động).",
+      "Trong nền kinh tế thị trường định hướng xã hội chủ nghĩa, cần điều tiết hợp lý lợi nhuận, đảm bảo quyền lợi người lao động, phân phối công bằng."
+    ],
+    "keyPoints": [
+      "Giá trị thặng dư = Giá trị mới - Giá trị sức lao động",
+      "M = C + V + M",
+      "Hai loại: Tuyệt đối và Tương đối",
+      "Cần phân phối công bằng trong CNXH"
+    ]
+  },
+  {
+    "id": "ungdung",
+    "title": "Ứng Dụng Vào Thực Tiễn Việt Nam",
+    "titleEn": "Application to Vietnam Context",
+    "content": [
+      "Việt Nam xây dựng nền kinh tế thị trường định hướng xã hội chủ nghĩa, kết hợp kinh tế thị trường với chủ nghĩa xã hội.",
+      "Nhà nước đóng vai trò định hướng, điều tiết vĩ mô, tạo môi trường pháp lý, đảm bảo công bằng xã hội và bảo vệ môi trường.",
+      "Phát triển đa dạng các thành phần kinh tế: kinh tế nhà nước, kinh tế tập thể, kinh tế tư nhân, kinh tế có vốn đầu tư nước ngoài.",
+      "Mục tiêu: Dân giàu, nước mạnh, dân chủ, công bằng, văn minh. Phát triển kinh tế gắn với tiến bộ và công bằng xã hội, bảo vệ môi trường."
+    ],
+    "keyPoints": [
+      "KTTT định hướng XHCN",
+      "Nhà nước định hướng và điều tiết",
+      "Đa dạng thành phần kinh tế",
+      "Mục tiêu: Giàu - Mạnh - Dân chủ - Công bằng"
+    ]
+  }
+]
