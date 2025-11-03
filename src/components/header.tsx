@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import { Logo } from './logo';
 
 // Custom navigation link component that handles both router and anchor links
-const NavLink = ({ href, children, className, ...props }: {
+type NavLinkProps = {
     href: string;
     children: React.ReactNode;
     className?: string;
     'aria-label'?: string;
-}) => {
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+const NavLink: React.FC<NavLinkProps> = ({ href, children, className, ...props }) => {
     if (href.startsWith('#') || href.startsWith('/#')) {
         return (
             <a href={href} className={className} {...props}>
@@ -27,7 +29,7 @@ const NavLink = ({ href, children, className, ...props }: {
 
 // Menu items cho nền tảng học tập Kinh tế chính trị
 const menuItems = [
-    { name: 'Các Chương Học', href: '/game' },
+    { name: 'Trò chơi Mô phỏng', href: '/game' },
     { name: 'Dòng Thời Gian', href: '/timeline' },
     { name: 'Nội Dung Chi Tiết', href: '/presentations' },
     { name: 'Tìm Hiểu Thêm', href: '/#about' },
