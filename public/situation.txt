@@ -1,0 +1,350 @@
+[cite_start]Chào bạn, đây là một ý tưởng tuyệt vời và hoàn toàn phù hợp với thiết kế "Free Input Engine" mà bạn đã mô tả trong tài liệu[cite: 42, 98].
+
+[cite_start]Để AI (do bạn xử lý) có thể chấm điểm các hành động tự do, mỗi sự kiện cần được thiết kế không chỉ với các lựa chọn cố định, mà còn với một bộ "từ khóa" (keywords) và "luật" (rules/modifiers) mà AI của bạn có thể phân tích[cite: 43, 44, 45].
+
+Dưới đây là kho 30 sự kiện được thiết kế nâng cao, chia theo 4 lĩnh vực cốt lõi. Mỗi sự kiện sẽ bao gồm các lựa chọn cố định (để người chơi tham khảo) và một phần **"Phân tích cho AI"** để bạn xây dựng logic chấm điểm cho hành động tự do.
+
+---
+
+### 📈 Lĩnh vực 1: Tăng trưởng Kinh tế (8 Sự kiện)
+
+**Sự kiện 1: Khủng hoảng Chuỗi cung ứng**
+* **Mô tả:** "Một cuộc đình công toàn cầu đã làm tê liệt các cảng biển. Hàng hóa nhập khẩu thiết yếu bị mắc kẹt, các nhà máy bắt đầu thiếu nguyên liệu. Hành động của bạn là gì?"
+* **Lựa chọn A (Trợ giá):** Trợ cấp cho các ngành bị ảnh hưởng.
+    * *Ảnh hưởng:* [KT: -10, CB: +5, CT: +5]
+* **Lựa chọn B (Tìm nguồn thay thế):** Đàm phán khẩn cấp với các quốc gia láng giềng.
+    * *Ảnh hưởng:* [KT: -5, NG: +10]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Mở lại chuỗi cung ứng, giảm thiệt hại kinh tế.
+    * [cite_start]**Keywords (Tích cực):** "trợ cấp"[cite: 43], "đàm phán", "ngoại giao", "ưu tiên hàng thiết yếu", "kích cầu nội địa", "đầu tư logistics".
+    * [cite_start]**Keywords (Tiêu cực):** "quốc hữu hóa"[cite: 43], "đóng cửa biên giới", "phụ thuộc", "đổ lỗi".
+    * [cite_start]**SynergyBonus[cite: 47]:** Nếu NG < 40, "đàm phán" sẽ kém hiệu quả. [cite_start]Nếu KT < 30, "trợ cấp" sẽ gây thâm hụt ngân sách lớn[cite: 48].
+
+**Sự kiện 2: Lạm phát phi mã**
+* [cite_start]**Mô tả:** "Giá cả tiêu dùng tăng vọt 20% trong quý. Người dân đang hoảng loạn. Ngân hàng trung ương yêu cầu một chỉ thị rõ ràng. Quyết sách của bạn là gì?" [cite: 82]
+* **Lựa chọn A (Thắt chặt):** Tăng lãi suất cơ bản 2%.
+    * *Ảnh hưởng:* [KT: -10, CT: +5, CB: -5]
+* **Lựa chọn B (Bình ổn):** Áp giá trần cho các mặt hàng thiết yếu.
+    * *Ảnh hưởng:* [KT: -5, CT: +10, CB: +5] (Nguy cơ thiếu hụt hàng hóa)
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Kiềm chế lạm phát mà không gây suy thoái hoặc bất ổn xã hội.
+    * **Keywords (Tích cực):** "tăng lãi suất", "thắt chặt tiền tệ", "bình ổn giá", "giảm chi tiêu công", "hỗ trợ người nghèo".
+    * [cite_start]**Keywords (Tiêu cực):** "in tiền"[cite: 43, 48], "trợ cấp toàn dân", "bỏ mặc", "đổ lỗi".
+    * [cite_start]**SynergyBonus[cite: 47]:** Nếu KT < 30, "tăng lãi suất" sẽ gây suy thoái nghiêm trọng (-10 KT). Nếu CB < 30, "thắt chặt" mà không "hỗ trợ" sẽ gây bất ổn lớn (-10 CT).
+
+**Sự kiện 3: Đề nghị từ Tập đoàn Đa quốc gia**
+* [cite_start]**Mô tả:** "Tập đoàn công nghệ khổng lồ 'Quantum Leap' muốn xây dựng nhà máy sản xuất chip tỷ đô. Họ yêu cầu ưu đãi thuế lớn và nới lỏng luật môi trường." [cite: 78]
+* **Lựa chọn A (Chấp thuận):** Đồng ý với mọi điều kiện.
+    * *Ảnh hưởng:* [KT: +20, CB: -10, NG: +5]
+* **Lựa chọn B (Từ chối):** Bảo vệ môi trường, từ chối đề nghị.
+    * *Ảnh hưởng:* [KT: -5, CB: +5, CT: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Thu hút đầu tư nhưng vẫn bảo vệ lợi ích quốc gia.
+    * [cite_start]**Keywords (Tích cực):** "ưu đãi có điều kiện", "chuyển giao công nghệ" [cite: 79][cite_start], "đào tạo nhân lực"[cite: 79], "thuế tối thiểu", "cam kết môi trường".
+    * **Keywords (Tiêu cực):** "chấp nhận vô điều kiện", "miễn thuế vĩnh viễn", "bỏ qua luật".
+    * [cite_start]**RealismModifier [cite: 45][cite_start]:** Yêu cầu "họ phải cho 10 tỷ đô" sẽ có Modifier = 0.1[cite: 46]. Yêu cầu "chuyển giao công nghệ" là hợp lý (Modifier = 1.0).
+
+**Sự kiện 4: Đình công Ngành vận tải**
+* [cite_start]**Mô tả:** "Toàn bộ tài xế xe tải và công nhân đường sắt đình công, yêu cầu giảm thuế nhiên liệu và tăng lương. Giao thông tê liệt. Bạn sẽ giải quyết thế nào?" [cite: 37]
+* **Lựa chọn A (Đàn áp):** Sử dụng lực lượng an ninh để giải tán.
+    * *Ảnh hưởng:* [CT: -15, KT: +5 (ngắn hạn), CB: -10]
+* **Lựa chọn B (Đàm phán):** Chấp nhận giảm 50% thuế nhiên liệu.
+    * *Ảnh hưởng:* [CT: +10, KT: -10 (ngân sách), CB: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Khôi phục trật tự, đảm bảo kinh tế vận hành, xoa dịu xã hội.
+    * [cite_start]**Keywords (Tích cực):** "đàm phán", "thỏa hiệp", "giảm thuế" [cite: 43][cite_start], "trợ cấp" [cite: 43][cite_start], "tăng lương tối thiểu"[cite: 37], "cam kết lộ trình".
+    * [cite_start]**Keywords (Tiêu cực):** "đàn áp"[cite: 43], "bỏ mặc", "thiết quân luật", "sa thải hàng loạt".
+
+**Sự kiện 5: Phát hiện Mỏ đất hiếm**
+* **Mô tả:** "Các nhà địa chất vừa phát hiện một mỏ đất hiếm khổng lồ tại khu vực cao nguyên, nơi có nhiều dân tộc thiểu số sinh sống và là rừng đầu nguồn quan trọng."
+* **Lựa chọn A (Khai thác ngay):** Cấp phép cho tập đoàn nhà nước khai thác.
+    * *Ảnh hưởng:* [KT: +25, CB: -15 (môi trường, di dân), CT: -10]
+* **Lựa chọn B (Bảo tồn):** Tuyên bố đây là khu bảo tồn quốc gia, cấm khai thác.
+    * *Ảnh hưởng:* [KT: -5, CB: +15, CT: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Cân bằng lợi ích kinh tế khổng lồ với bảo vệ môi trường và xã hội.
+    * **Keywords (Tích cực):** "khai thác có kiểm soát", "công nghệ xanh", "đánh giá tác động môi trường", "chia sẻ lợi nhuận", "tái định cư", "quỹ phúc lợi".
+    * **Keywords (Tiêu cực):** "khai thác triệt để", "cho nước ngoài thầu", "di dời cưỡng chế", "phá rừng".
+
+**Sự kiện 6: Bong bóng Bất động sản**
+* **Mô tả:** "Giá nhà tại các đô thị lớn tăng gấp 3 lần trong 2 năm, phần lớn do đầu cơ. Ngân hàng đang đối mặt với nợ xấu. Nguy cơ 'bong bóng' vỡ là rất cao."
+* **Lựa chọn A (Siết tín dụng):** Tăng thuế BĐS thứ hai và siết chặt cho vay đầu cơ.
+    * *Ảnh hưởng:* [KT: -15 (thị trường đóng băng), CT: +10, CB: +5]
+* **Lựa chọn B (Để thị trường tự quyết):** Không can thiệp, tin vào thị trường.
+    * *Ảnh hưởng:* [KT: -30 (khi vỡ), CT: -20, CB: -20] (Kích hoạt 1 event chain khủng hoảng)
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** "Hạ cánh mềm" thị trường, tránh sụp đổ kinh tế.
+    * **Keywords (Tích cực):** "tăng thuế lũy tiến", "siết tín dụng", "lãi suất", "xây nhà ở xã hội", "đánh thuế bỏ hoang".
+    * [cite_start]**Keywords (Tiêu cực):** "bơm tiền" [cite: 43][cite_start], "trợ cấp đầu cơ", "quốc hữu hóa" [cite: 43][cite_start], "giảm thuế"[cite: 43].
+
+**Sự kiện 7: Nông nghiệp Thất bát**
+* **Mô tả:** "Một đợt hạn hán kéo dài khiến sản lượng lương thực sụt giảm nghiêm trọng. An ninh lương thực bị đe dọa, giá gạo tăng cao. Bạn sẽ làm gì?"
+* **Lựa chọn A (Nhập khẩu khẩn cấp):** Dùng dự trữ ngoại hối để nhập khẩu lương thực.
+    * *Ảnh hưởng:* [KT: -10, CB: +10, NG: -5]
+* **Lựa chọn B (Trợ cấp nông dân):** Bơm tiền hỗ trợ nông dân và bình ổn giá.
+    * *Ảnh hưởng:* [KT: -8, CB: +5, CT: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Đảm bảo an ninh lương thực, hỗ trợ nông dân.
+    * [cite_start]**Keywords (Tích cực):** "nhập khẩu", "trợ cấp" [cite: 43][cite_start], "quỹ bình ổn", "nghiên cứu giống", "đầu tư thủy lợi", "năng lượng tái tạo"[cite: 36].
+    * **Keywords (Tiêu cực):** "cấm xuất khẩu" (gây sốc thị trường), "bỏ mặc", "phân phối theo tem phiếu".
+
+**Sự kiện 8: Sập cầu Huyết mạch**
+* **Mô tả:** "Cây cầu huyết mạch nối liền 2 trung tâm kinh tế lớn đã sụp đổ do cũ kỹ. Giao thông tắc nghẽn, chi phí logistics tăng vọt. Cần một giải pháp ngay lập tức."
+* **Lựa chọn A (Xây mới cấp tốc):** Dùng ngân sách khẩn cấp, xây lại trong 6 tháng.
+    * *Ảnh hưởng:* [KT: -15 (chi phí), CT: +10 (quyết đoán)]
+* **Lựa chọn B (Làm phà tạm):** Sửa chữa tạm bợ và làm phà/cầu phao.
+    * *Ảnh hưởng:* [KT: -5 (ngắn hạn), CT: -5 (chậm chạp)]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Khôi phục hạ tầng nhanh chóng, hiệu quả.
+    * [cite_start]**Keywords (Tích cực):** "xây mới", "nâng cấp", "đấu thầu công khai", "cầu tạm", "huy động quân đội", "kêu gọi tư nhân hóa"[cite: 43].
+    * **Keywords (Tiêu cực):** "chỉ định thầu" (dễ tham nhũng), "sửa chữa chắp vá", "bỏ mặc".
+    * [cite_start]**SynergyBonus[cite: 47]:** Nếu KT > 80, "xây mới cấp tốc" nhận bonus (+5 CT) vì quốc gia có tiềm lực.
+
+---
+
+### 🏛️ Lĩnh vực 2: Ổn định Chính trị (7 Sự kiện)
+
+**Sự kiện 9: Bê bối Tham nhũng Cấp cao**
+* [cite_start]**Mô tả:** "Báo chí phanh phui một vụ tham nhũng lớn liên quan đến Bộ trưởng Bộ Tài chính, người vốn là đồng minh thân cận của bạn." [cite: 40]
+* [cite_start]**Lựa chọn A (Bảo vệ):** Bác bỏ cáo buộc, yêu cầu báo chí ngừng đưa tin[cite: 41].
+    * *Ảnh hưởng:* [CT: -20, CB: -10]
+* [cite_start]**Lựa chọn B (Hy sinh):** Cách chức và điều tra ngay lập tức[cite: 41].
+    * *Ảnh hưởng:* [CT: +15, CB: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Xử lý khủng hoảng, lấy lại lòng tin, củng cố quyền lực.
+    * [cite_start]**Keywords (Tích cực):** "chống tham nhũng"[cite: 43], "điều tra độc lập", "cách chức", "công khai minh bạch", "cải tổ nội các".
+    * [cite_start]**Keywords (Tiêu cực):** "bảo vệ", "che đậy", "kiểm duyệt báo chí" [cite: 43][cite_start], "đổ lỗi phe đối lập", "yêu cầu ngừng đưa tin"[cite: 41].
+
+**Sự kiện 10: Phong trào Ly khai**
+* **Mô tả:** "Một tỉnh ở xa xôi, giàu tài nguyên, đang dấy lên phong trào đòi ly khai. Các cuộc biểu tình ôn hòa đang có nguy cơ biến thành bạo lực."
+* [cite_start]**Lựa chọn A (Đàn áp):** Ban bố tình trạng khẩn cấp, đưa quân đội vào[cite: 43].
+    * *Ảnh hưởng:* [CT: -25, CB: -15, NG: -10]
+* **Lựa chọn B (Đàm phán):** Mời lãnh đạo phong trào đối thoại, hứa hẹn thêm quyền tự trị.
+    * *Ảnh hưởng:* [CT: +10, KT: -5 (chia sẻ tài nguyên), CB: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Giữ vững toàn vẹn lãnh thổ, tránh nội chiến.
+    * **Keywords (Tích cực):** "đàm phán", "đối thoại", "trưng cầu dân ý", "thêm quyền tự trị", "phân chia lợi ích", "phát triển kinh tế".
+    * [cite_start]**Keywords (Tiêu cực):** "đàn áp" [cite: 43][cite_start], "bắt giữ lãnh đạo", "cắt viện trợ", "tuyên chiến"[cite: 43], "thiết quân luật".
+
+**Sự kiện 11: Khủng hoảng Tin giả (Fake News)**
+* **Mô tả:** "Một chiến dịch tin giả quy mô lớn đang lan truyền trên mạng xã hội, cáo buộc chính phủ che giấu dịch bệnh và kích động bạo lực. Lòng tin sụt giảm nghiêm trọng."
+* **Lựa chọn A (Kiểm duyệt):** Đóng cửa các mạng xã hội và bắt giữ các "KOL" lan tin.
+    * *Ảnh hưởng:* [CT: +10 (ngắn hạn), CB: -15, NG: -5]
+* **Lựa chọn B (Công khai):** Tổ chức họp báo hàng ngày, công bố dữ liệu minh bạch.
+    * *Ảnh hưởng:* [CT: +10, CB: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Dập tắt tin giả, khôi phục lòng tin xã hội.
+    * **Keywords (Tích cực):** "minh bạch", "họp báo", "công bố dữ liệu", "an ninh mạng", "hợp tác với nền tảng", "giáo dục công dân".
+    * [cite_start]**Keywords (Tiêu cực):** "kiểm duyệt"[cite: 43], "đóng cửa internet", "bắt bớ", "tuyên truyền một chiều".
+
+**Sự kiện 12: Yêu cầu Cải cách Tư pháp**
+* **Mô tả:** "Tòa án tối cao bị cáo buộc tham nhũng và ra các phán quyết bất công. Người dân và các nhà đầu tư nước ngoài đòi hỏi một cuộc cải cách tư pháp toàn diện."
+* **Lựa chọn A (Cải tổ mạnh):** Thành lập ủy ban độc lập để cải tổ, sa thải các thẩm phán tham nhũng.
+    * *Ảnh hưởng:* [CT: +15, KT: +10, CB: +10] (Nguy cơ phe nhóm cũ chống phá)
+* **Lựa chọn B (Trì hoãn):** Hứa hẹn sẽ xem xét và thành lập ủy ban nghiên cứu.
+    * *Ảnh hưởng:* [CT: -5, KT: -5, CB: -5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Cải thiện hệ thống pháp luật, tăng cường công lý.
+    * [cite_start]**Keywords (Tích cực):** "cải tổ hiến pháp" [cite: 43][cite_start], "ủy ban độc lập", "chống tham nhũng"[cite: 43], "tăng lương thẩm phán", "luật sư công".
+    * **Keywords (Tiêu cực):** "giữ nguyên", "bảo vệ thẩm phán", "can thiệp vào tòa án".
+
+**Sự kiện 13: Rò rỉ Dữ liệu Công dân**
+* **Mô tả:** "Hệ thống dữ liệu Căn cước công dân quốc gia đã bị hack. Toàn bộ thông tin cá nhân của hàng triệu người bị rao bán trên 'dark web'. Xã hội hoang mang."
+* **Lựa chọn A (Che giấu):** Bí mật vá lỗ hổng và truy lùng hacker.
+    * *Ảnh hưởng:* [CT: -10 (nếu lộ), CB: -5]
+* **Lựa chọn B (Công bố):** Công khai xin lỗi, cảnh báo người dân và đưa ra biện pháp khắc phục.
+    * *Ảnh hưởng:* [CT: +5 (dài hạn), CB: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Xử lý khủng hoảng an ninh mạng, bảo vệ công dân.
+    * **Keywords (Tích cực):** "công khai", "xin lỗi", "vá lỗ hổng", "an ninh mạng", "nâng cấp hệ thống", "bồi thường", "điều tra".
+    * **Keywords (Tiêu cực):** "che giấu", "đổ lỗi", "bắt người dùng", "không làm gì".
+
+**Sự kiện 14: Yêu cầu Sửa đổi Hiến pháp**
+* [cite_start]**Mô tả:** "Phe đối lập và các nhà hoạt động xã hội đang tập hợp đủ chữ ký, yêu cầu sửa đổi Hiến pháp để tăng cường quyền lực cho quốc hội và hạn chế quyền hành pháp của bạn." [cite: 43]
+* **Lựa chọn A (Bác bỏ):** Tuyên bố Hiến pháp hiện tại là hoàn hảo.
+    * *Ảnh hưởng:* [CT: -15, CB: -5]
+* **Lựa chọn B (Thành lập Ủy ban):** Đồng ý thành lập Ủy ban soạn thảo Hiến pháp mới.
+    * *Ảnh hưởng:* [CT: +10, CB: +5] (Bắt đầu 1 event chain dài hơi)
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Điều hướng một cuộc khủng hoảng chính trị lớn.
+    * [cite_start]**Keywords (Tích cực):** "cải tổ hiến pháp"[cite: 43], "trưng cầu dân ý", "ủy ban", "đối thoại", "lắng nghe".
+    * [cite_start]**Keywords (Tiêu cực):** "bác bỏ", "đàn áp" [cite: 43][cite_start], "giải tán quốc hội", "ban bố tình trạng khẩn cấp"[cite: 43].
+
+**Sự kiện 15: Bầu cử Giữa nhiệm kỳ**
+* **Mô tả:** "Đã 2 năm trôi qua. Một cuộc bầu cử giữa nhiệm kỳ đang đến gần. Tỷ lệ ủng hộ của bạn sẽ quyết định đảng của bạn có giữ được đa số tại quốc hội hay không."
+* **Sự kiện này đặc biệt:** Không có lựa chọn. Kết quả (CT: +/- 15) sẽ được tính tự động dựa trên 3 chỉ số còn lại (KT, CB, NG) tại thời điểm này. [cite_start]Đây là một sự kiện cốt truyện (milestone event)[cite: 57].
+
+---
+
+### ❤️ Lĩnh vực 3: Công bằng Xã hội (7 Sự kiện)
+
+**Sự kiện 16: Biểu tình của Sinh viên**
+* **Mô tả:** "Hàng ngàn sinh viên biểu tình phản đối việc tăng học phí đại học và yêu cầu 'miễn phí giáo dục'. Họ đã chiếm giữ khuôn viên trường đại học lớn nhất."
+* **Lựa chọn A (Đối thoại):** Gặp gỡ sinh viên, hứa giảm 50% học phí.
+    * *Ảnh hưởng:* [CB: +10, KT: -10 (ngân sách), CT: +5]
+* **Lựa chọn B (Phớt lờ):** Cho rằng đây là yêu sách vô lý, chờ họ tự giải tán.
+    * *Ảnh hưởng:* [CB: -10, CT: -5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Giải quyết bất ổn xã hội, cải thiện giáo dục.
+    * [cite_start]**Keywords (Tích cực):** "miễn phí giáo dục"[cite: 43], "giảm học phí", "quỹ học bổng", "trợ cấp sinh viên", "đối thoại", "cải cách giáo dục".
+    * [cite_start]**Keywords (Tiêu cực):** "đàn áp"[cite: 43], "bỏ mặc", "tăng học phí", "sa thải hiệu trưởng".
+
+**Sự kiện 17: Chênh lệch Giàu nghèo Gia tăng**
+* [cite_start]**Mô tả:** "Báo cáo mới nhất cho thấy 1% dân số giàu nhất đang nắm giữ 60% tài sản quốc gia. Sự bất bình đẳng đang ở mức báo động." [cite: 84]
+* **Lựa chọn A (Thuế lũy tiến):** Ban hành chính sách thuế tài sản và thuế thu nhập lũy tiến mới.
+    * [cite_start]*Ảnh hưởng:* [CB: +15, KT: -10, CT: -5 (giới giàu phản đối)] [cite: 85, 86]
+* **Lựa chọn B (Kinh tế nhỏ giọt):** Giảm thuế cho doanh nghiệp, hy vọng lợi ích sẽ "nhỏ giọt" xuống dưới.
+    * *Ảnh hưởng:* [CB: -15, KT: +5, CT: -10]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Giảm bất bình đẳng, tái phân phối của cải.
+    * **Keywords (Tích cực):** "thuế lũy tiến", "thuế tài sản", "phúc lợi xã hội", "lương tối thiểu", "nhà ở xã hội", "chống độc quyền".
+    * **Keywords (Tiêu cực):** "giảm thuế người giàu", "cắt giảm phúc lợi", "kinh tế nhỏ giọt".
+
+**Sự kiện 18: Thảm họa Môi trường Biển**
+* **Mô tả:** "Một tàu chở dầu gặp nạn, làm tràn hàng ngàn tấn dầu ra vùng biển du lịch trọng điểm. Hệ sinh thái bị hủy hoại, ngư dân và ngành du lịch điêu đứng."
+* **Lựa chọn A (Bồi thường):** Yêu cầu công ty tàu dầu bồi thường, dùng ngân sách khắc phục ngay.
+    * *Ảnh hưởng:* [CB: +10, KT: -10, NG: -5 (nếu là tàu nước ngoài)]
+* **Lựa chọn B (Che giấu):** Cố gắng che giấu quy mô thảm họa để cứu ngành du lịch.
+    * *Ảnh hưởng:* [CB: -20, CT: -15, KT: -5 (khi vỡ lở)]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Khắc phục môi trường, hỗ trợ người dân.
+    * **Keywords (Tích cực):** "dọn dẹp", "khắc phục", "bồi thường", "hỗ trợ ngư dân", "trừng phạt", "điều tra", "nâng cấp an toàn hàng hải".
+    * **Keywords (Tiêu cực):** "che giấu", "đổ lỗi", "bỏ mặc", "coi nhẹ".
+
+**Sự kiện 19: Yêu cầu Tự do Báo chí**
+* [cite_start]**Mô tả:** "Các nhà báo trong nước và quốc tế đồng loạt lên tiếng, yêu cầu chính phủ nới lỏng kiểm duyệt và cho phép báo chí tư nhân hoạt động." [cite: 43]
+* **Lựa chọn A (Nới lỏng):** Cho phép thành lập một vài tờ báo tư nhân có điều kiện.
+    * *Ảnh hưởng:* [CB: +10, NG: +5, CT: -10 (khó kiểm soát)]
+* **Lựa chọn B (Siết chặt):** Tăng cường kiểm duyệt, coi đây là hành vi thù địch.
+    * *Ảnh hưởng:* [CB: -10, NG: -10, CT: +5 (ngắn hạn)]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Cân bằng giữa tự do ngôn luận và ổn định chính trị.
+    * [cite_start]**Keywords (Tích cực):** "tự do báo chí"[cite: 43], "nới lỏng", "minh bạch", "quyền tiếp cận thông tin", "chống tin giả".
+    * [cite_start]**Keywords (Tiêu cực):** "kiểm duyệt"[cite: 43], "bắt giữ nhà báo", "đóng cửa", "tuyên truyền".
+
+**Sự kiện 20: Hệ thống Y tế Công quá tải**
+* **Mô tả:** "Các bệnh viện công đang quá tải nghiêm trọng. Người dân phải chờ đợi hàng tháng để được phẫu thuật. Tỷ lệ tử vong do các bệnh thông thường đang tăng lên."
+* [cite_start]**Lựa chọn A (Xây bệnh viện):** Chi ngân sách lớn để xây thêm 10 bệnh viện mới[cite: 43].
+    * *Ảnh hưởng:* [CB: +15, KT: -15 (chi phí)]
+* **Lựa chọn B (Tư nhân hóa):** Kêu gọi tư nhân đầu tư vào y tế, giảm gánh nặng cho nhà nước.
+    * *Ảnh hưởng:* [CB: -10 (người nghèo khó tiếp cận), KT: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Nâng cao chất lượng y tế cho mọi người dân.
+    * [cite_start]**Keywords (Tích cực):** "xây bệnh viện" [cite: 43][cite_start], "bảo hiểm y tế toàn dân", "tăng lương bác sĩ", "y tế dự phòng", "miễn phí y tế"[cite: 43].
+    * [cite_start]**Keywords (Tiêu cực):** "tư nhân hóa hoàn toàn"[cite: 43], "cắt giảm ngân sách", "để thị trường tự quyết".
+    * [cite_start]**SynergyBonus[cite: 47]:** Nếu KT > 80, "xây bệnh viện" nhận bonus (+5 CB) vì có đủ tiền.
+
+**Sự kiện 21: Tranh cãi về Di sản Văn hóa**
+* **Mô tả:** "Một ngôi đền cổ 500 tuổi đang cản trở dự án xây dựng một trung tâm thương mại hiện đại. Phe bảo tồn và phe phát triển đang tranh cãi gay gắt."
+* **Lựa chọn A (Bảo tồn):** Hủy dự án TTTM, công nhận đền là di sản quốc gia.
+    * *Ảnh hưởng:* [CB: +10, KT: -10, CT: +5]
+* **Lựa chọn B (Phát triển):** Di dời ngôi đền đến địa điểm khác để xây TTTM.
+    * *Ảnh hưởng:* [CB: -10, KT: +10, CT: -5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Cân bằng giữa phát triển kinh tế và bảo tồn di sản.
+    * **Keywords (Tích cực):** "bảo tồn", "di sản", "quy hoạch lại", "kết hợp hài hòa", "du lịch văn hóa", "bảo tàng".
+    * **Keywords (Tiêu cực):** "phá hủy", "di dời", "ưu tiên kinh tế", "bỏ mặc".
+
+**Sự kiện 22: Yêu cầu Bình đẳng giới**
+* **Mô tả:** "Các nhóm hoạt động vì quyền phụ nữ đang yêu cầu chính phủ ban hành luật đảm bảo 30% số ghế trong quốc hội và các vị trí lãnh đạo doanh nghiệp phải là nữ."
+* **Lựa chọn A (Ban hành luật):** Đồng ý ban hành luật "quota" 30%.
+    * *Ảnh hưởng:* [CB: +15, CT: +5]
+* **Lựa chọn B (Giáo dục):** Từ chối quota, thay vào đó tăng ngân sách cho giáo dục bình đẳng giới.
+    * *Ảnh hưởng:* [CB: +5, CT: -5]
+* **Phân tích cho AI (Hành động tự do):**
+    * [cite_start]**Mục tiêu:** Thúc đẩy bình đẳng giới[cite: 43].
+    * [cite_start]**Keywords (Tích cực):** "bình đẳng giới"[cite: 43], "quota", "luật bình đẳng", "tăng lương", "giáo dục", "chống bạo lực gia đình".
+    * **Keywords (Tiêu cực):** "từ chối", "phân biệt đối xử", "coi nhẹ".
+
+---
+
+### 🌍 Lĩnh vực 4: Ngoại giao (8 Sự kiện)
+
+**Sự kiện 23: Yêu cầu Căn cứ Quân sự**
+* [cite_start]**Mô tả:** "Nước láng giềng (và là một cường quốc) đề nghị xây dựng một căn cứ quân sự chung gần biên giới để 'tăng cường an ninh khu vực'." [cite: 38]
+* **Lựa chọn A (Đồng ý):** Chấp thuận ngay lập tức.
+    * [cite_start]*Ảnh hưởng:* [NG: +15, CT: -10 (phe đối lập phản đối), KT: +5] [cite: 38]
+* **Lựa chọn B (Từ chối):** Từ chối thẳng thừng, giữ vững chủ quyền.
+    * [cite_start]*Ảnh hưởng:* [NG: -20, CT: +10 (dân tộc chủ nghĩa)] [cite: 38]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Cân bằng an ninh quốc gia, chủ quyền và quan hệ đồng minh.
+    * [cite_start]**Keywords (Tích cực):** "trung lập", "không liên minh quân sự", "hợp tác kinh tế"[cite: 38], "an ninh chung", "đàm phán lại".
+    * [cite_start]**Keywords (Tiêu cực):** "chấp nhận vô điều kiện", "gia nhập liên minh quân sự" [cite: 43][cite_start], "khiêu khích", "tuyên chiến"[cite: 43].
+
+**Sự kiện 24: Chiến tranh Thương mại**
+* **Mô tả:** "Hai cường quốc lớn nhất thế giới (cũng là 2 đối tác thương mại lớn nhất của bạn) bắt đầu một cuộc chiến tranh thương mại, yêu cầu bạn phải 'chọn phe'."
+* **Lựa chọn A (Chọn phe A):** Áp thuế lên hàng hóa của phe B.
+    * *Ảnh hưởng:* [NG: +10 (với A), NG: -20 (với B), KT: -10]
+* **Lựa chọn B (Trung lập):** Cố gắng duy trì thương mại với cả hai.
+    * *Ảnh hưởng:* [NG: -5 (với cả hai), KT: -5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Giảm thiểu thiệt hại kinh tế, duy trì sự độc lập ngoại giao.
+    * **Keywords (Tích cực):** "trung lập", "đa dạng hóa thị trường", "WTO", "đàm phán", "ngoại giao cây tre".
+    * [cite_start]**Keywords (Tiêu cực):** "chọn phe", "áp thuế", "cấm vận" [cite: 43][cite_start], "phản đối"[cite: 43].
+
+**Sự kiện 25: Tranh chấp Biên giới**
+* **Mô tả:** "Một cuộc đụng độ nhỏ vừa xảy ra tại khu vực biên giới đang tranh chấp. Cả hai bên đều có binh lính bị thương. Không khí vô cùng căng thẳng."
+* **Lựa chọn A (Điều quân):** Tăng cường lực lượng quân sự, sẵn sàng đáp trả.
+    * *Ảnh hưởng:* [NG: -15, CT: +10]
+* **Lựa chọn B (Rút quân):** Đơn phương rút quân khỏi khu vực để giảm căng thẳng.
+    * *Ảnh hưởng:* [NG: +5, CT: -15 (bị coi là hèn nhát)]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Tránh chiến tranh, bảo vệ chủ quyền.
+    * **Keywords (Tích cực):** "đàm phán", "đường dây nóng", "rút quân song phương", "tòa án quốc tế", "quan sát viên LHQ".
+    * [cite_start]**Keywords (Tiêu cực):** "tuyên chiến"[cite: 43], "xâm lược", "tấn công trước", "khiêu khích".
+
+**Sự kiện 26: Lời mời tham gia Liên minh Mới**
+* **Mô tả:** "Một khối các quốc gia đang phát triển mời bạn tham gia một 'Liên minh Kinh tế - Quân sự' mới, nhằm đối trọng với các cường quốc hiện hữu."
+* [cite_start]**Lựa chọn A (Gia nhập):** Ký hiệp ước, trở thành thành viên sáng lập[cite: 43].
+    * *Ảnh hưởng:* [NG: +15 (với khối), NG: -15 (với cường quốc), KT: +5]
+* **Lựa chọn B (Từ chối):** Giữ chính sách trung lập, không liên kết.
+    * *Ảnh hưởng:* [NG: -5 (với khối), NG: +5 (với cường quốc)]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Tối đa hóa lợi ích quốc gia.
+    * **Keywords (Tích cực):** "quan sát viên", "hợp tác kinh tế", "trung lập", "đối tác chiến lược", "không liên minh quân sự".
+    * [cite_start]**Keywords (Tiêu cực):** "gia nhập ngay", "từ chối thẳng thừng"[cite: 38].
+
+**Sự kiện 27: Đối mặt với Cấm vận Quốc tế**
+* [cite_start]**Mô tả:** "Do các chính sách về môi trường (hoặc nhân quyền) của bạn, một khối các quốc gia phương Tây vừa ban hành lệnh cấm vận lên các mặt hàng xuất khẩu chủ lực." [cite: 43]
+* **Lựa chọn A (Nhân nhượng):** Thay đổi chính sách để được gỡ bỏ cấm vận.
+    * *Ảnh hưởng:* [NG: +10, KT: +10, CT: -15 (bị coi là yếu đuối)]
+* **Lựa chọn B (Phản đối):** Lên án lệnh cấm vận, tìm thị trường mới.
+    * *Ảnh hưởng:* [NG: -10, KT: -15, CT: +10]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Gỡ bỏ cấm vận, bảo vệ kinh tế và chủ quyền.
+    * **Keywords (Tích cực):** "đàm phán", "cải cách từng phần", "minh bạch hóa", "kêu gọi WTO", "tìm thị trường mới", "kích cầu nội địa".
+    * [cite_start]**Keywords (Tiêu cực):** "phản đối kịch liệt"[cite: 43], "trả đũa", "cắt đứt ngoại giao", "nhân nhượng hoàn toàn".
+
+**Sự kiện 28: Khủng hoảng Người tị nạn**
+* **Mô tả:** "Một cuộc nội chiến ở nước láng giềng khiến hàng trăm ngàn người tị nạn tràn qua biên giới của bạn. Họ cần thức ăn và chỗ ở ngay lập tức."
+* **Lựa chọn A (Mở cửa):** Mở cửa biên giới, lập trại tị nạn.
+    * *Ảnh hưởng:* [NG: +15, CB: +10, KT: -15 (chi phí), CT: -10 (xáo trộn)]
+* **Lựa chọn B (Đóng cửa):** Đóng cửa biên giới, ngăn chặn người tị nạn.
+    * *Ảnh hưởng:* [NG: -20, CB: -20, CT: +5]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Cân bằng nhân đạo và an ninh quốc gia.
+    * [cite_start]**Keywords (Tích cực):** "viện trợ nhân đạo"[cite: 43], "trại tị nạn tạm thời", "kêu gọi LHQ", "vùng đệm an toàn", "sàng lọc".
+    * **Keywords (Tiêu cực):** "đóng cửa", "đẩy đuổi", "bỏ mặc", "vũ trang biên giới".
+
+**Sự kiện 29: Hội nghị Thượng đỉnh về Khí hậu**
+* **Mô tả:** "Hội nghị Khí hậu Toàn cầu yêu cầu quốc gia của bạn cam kết 'Net-Zero vào năm 2050', đồng nghĩa với việc phải đóng cửa nhiều nhà máy than và thay đổi nền kinh tế."
+* **Lựa chọn A (Cam kết):** Ký cam kết, bất chấp chi phí kinh tế.
+    * *Ảnh hưởng:* [NG: +20, KT: -15 (ngắn hạn), CB: +5]
+* **Lựa chọn B (Từ chối):** Cho rằng các nước giàu phải chịu trách nhiệm, từ chối cam kết.
+    * *Ảnh hưởng:* [NG: -15, KT: +5 (ngắn hạn)]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Bảo vệ môi trường mà không hy sinh kinh tế.
+    * [cite_start]**Keywords (Tích cực):** "cam kết có điều kiện", "yêu cầu hỗ trợ tài chính", "năng lượng tái tạo"[cite: 36], "chuyển đổi công nghệ", "lộ trình thực tế".
+    * **Keywords (Tiêu cực):** "từ chối hoàn toàn", "cam kết vô điều kiện", "đốt thêm than".
+
+**Sự kiện 30: Yêu cầu Viện trợ Nhân đạo**
+* [cite_start]**Mô tả:** "Một quốc gia đồng minh vừa trải qua một trận động đất kinh hoàng. Họ đang khẩn thiết yêu cầu quốc gia của bạn gửi 'viện trợ nhân đạo' (tiền, hàng hóa, và đội cứu hộ)." [cite: 43]
+* **Lựa chọn A (Hỗ trợ lớn):** Gửi gói viện trợ 100 triệu USD và đội cứu hộ tinh nhuệ.
+    * *Ảnh hưởng:* [NG: +15, KT: -10 (chi phí)]
+* **Lựa chọn B (Hỗ trợ tượng trưng):** Gửi thư chia buồn và 1 triệu USD.
+    * *Ảnh hưởng:* [NG: +1, KT: -1]
+* **Phân tích cho AI (Hành động tự do):**
+    * **Mục tiêu:** Thể hiện tình đoàn kết quốc tế, cân đối ngân sách.
+    * [cite_start]**Keywords (Tích cực):** "viện trợ nhân đạo"[cite: 43], "gửi đội cứu hộ", "gói tài chính", "lương thực", "thuốc men", "xây dựng lại".
+    * **Keywords (Tiêu cực):** "chia buồn", "từ chối", "yêu cầu trả nợ".
+    * [cite_start]**SynergyBonus[cite: 47]:** Nếu KT < 30, "viện trợ lớn" sẽ bị -10 KT và -5 CT (người dân phản đối).

@@ -9,7 +9,7 @@ import {
   AlertCircle,
   Trophy,
 } from "lucide-react";
-import { Scenario, getRandomScenarios } from "../content/situation"; // Import Scenario interface and data function
+import { Scenario, getRandomScenarios } from "../content/situations"; // Import Scenario interface and data function
 
 // --- 1. INTERFACE & TYPES ---
 
@@ -34,7 +34,7 @@ interface GameState {
 
 // --- 2. CONSTANTS ---
 
-const MAX_STAT = 100;
+const MAX_STAT = 100; // Resetting MAX_STAT to 100 as per the initial refactoring, assuming the user wants a wider range.
 const MIN_STAT = 0;
 const INITIAL_STATS: PlayerStats = {
   CT: 50,
@@ -45,6 +45,58 @@ const INITIAL_STATS: PlayerStats = {
 const TOTAL_ROUNDS = 16;
 
 // --- 3. HELPER FUNCTIONS ---
+
+// Helper function to map stat key to image prefix
+const getStatPrefix = (statKey: keyof PlayerStats): string => {
+  switch (statKey) {
+    case "CT":
+      return "politics";
+    case "KT":
+      return "economy";
+    case "CB":
+      return "society";
+    case "NG":
+      return "diplomacy";
+    default:
+      return "politics";
+  }
+};
+
+// Helper function to map score to image level (0, 25, 50, 75, 100)
+const getStatImageLevel = (score: number): number => {
+  // Ngưỡng điểm: 0, 20, 40, 60, 80, 100 (tương ứng với file 0, 25, 50, 75, 100)
+  if (score <= 20) return 0;
+  if (score <= 40) return 25;
+  if (score <= 60) return 50;
+  if (score <= 80) return 75;
+  return 100;
+};
+
+// Helper function to get the full image path
+const getStatImagePath = (
+  statKey: keyof PlayerStats,
+  score: number
+): string => {
+  const prefix = getStatPrefix(statKey);
+  const level = getStatImageLevel(score);
+  return `/assets/images/stats/${prefix}_${level}.png`;
+};
+
+// Helper function to get the stat display name
+const getStatDisplayName = (statKey: keyof PlayerStats): string => {
+  switch (statKey) {
+    case "CT":
+      return "Chính trị";
+    case "KT":
+      return "Kinh tế";
+    case "CB":
+      return "Xã hội";
+    case "NG":
+      return "Ngoại giao";
+    default:
+      return "";
+  }
+};
 
 const getIcon = (iconName: "CT" | "KT" | "CB" | "NG") => {
   switch (iconName) {
@@ -206,28 +258,30 @@ function DecisionGame() {
 
   // --- 5. RENDER COMPONENTS ---
 
-  const renderStatBar = (
-    label: string,
-    value: number,
-    icon: React.ReactNode,
-    color: string
-  ) => (
-    <div className="flex flex-col items-center p-2 bg-white rounded-lg shadow-md border border-gray-200">
-      <div className={`text-xl font-bold ${color}`}>{label}</div>
-      <div className="w-full h-3 bg-gray-200 rounded-full mt-1">
-        <div
-          className={`h-full rounded-full transition-all duration-500 ${color.replace(
-            "text-",
-            "bg-"
-          )}`}
-          style={{ width: `${(value / MAX_STAT) * 100}%` }}
-        ></div>
+  // New render function using images
+  const renderStatImage = (statKey: keyof PlayerStats, value: number) => {
+    const imagePath = getStatImagePath(statKey, value);
+    const displayName = getStatDisplayName(statKey);
+    const color = getStatColor(value); // Keep color for score text
+
+    return (
+      <div className="flex flex-col items-center p-2 bg-white rounded-lg shadow-md border border-gray-200 transition-all duration-300 hover:shadow-lg">
+        <div className="text-sm font-bold text-gray-700 mb-1">
+          {displayName}
+        </div>
+        <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-gray-100 shadow-inner">
+          <img
+            src={imagePath}
+            alt={`${displayName} Level ${value}`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className={`text-sm mt-1 font-semibold ${color}`}>
+          {value} / {MAX_STAT}
+        </div>
       </div>
-      <div className={`text-sm mt-1 font-semibold ${getStatColor(value)}`}>
-        {value} / {MAX_STAT}
-      </div>
-    </div>
-  );
+    );
+  };
 
   const renderImpact = (impact: PlayerStats) => (
     <div className="grid grid-cols-2 gap-2 mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
@@ -270,31 +324,11 @@ function DecisionGame() {
           <p className="text-lg text-gray-700 mb-6">
             {performance.description}
           </p>
-          <div className="grid grid-cols-2 gap-4 text-left mb-8">
-            {renderStatBar(
-              "Chính trị (CT)",
-              stats.CT,
-              getIcon("CT"),
-              "text-blue-600"
-            )}
-            {renderStatBar(
-              "Kinh tế (KT)",
-              stats.KT,
-              getIcon("KT"),
-              "text-green-600"
-            )}
-            {renderStatBar(
-              "Xã hội (CB)",
-              stats.CB,
-              getIcon("CB"),
-              "text-red-600"
-            )}
-            {renderStatBar(
-              "Ngoại giao (NG)",
-              stats.NG,
-              getIcon("NG"),
-              "text-yellow-600"
-            )}
+          <div className="grid grid-cols-4 gap-4 text-left mb-8">
+            {renderStatImage("CT", stats.CT)}
+            {renderStatImage("KT", stats.KT)}
+            {renderStatImage("CB", stats.CB)}
+            {renderStatImage("NG", stats.NG)}
           </div>
           <button
             onClick={handleStartGame}
@@ -324,10 +358,10 @@ function DecisionGame() {
             </div>
           </div>
           <div className="grid grid-cols-4 gap-2">
-            {renderStatBar("CT", stats.CT, getIcon("CT"), "text-blue-600")}
-            {renderStatBar("KT", stats.KT, getIcon("KT"), "text-green-600")}
-            {renderStatBar("CB", stats.CB, getIcon("CB"), "text-red-600")}
-            {renderStatBar("NG", stats.NG, getIcon("NG"), "text-yellow-600")}
+            {renderStatImage("CT", stats.CT)}
+            {renderStatImage("KT", stats.KT)}
+            {renderStatImage("CB", stats.CB)}
+            {renderStatImage("NG", stats.NG)}
           </div>
         </div>
 
