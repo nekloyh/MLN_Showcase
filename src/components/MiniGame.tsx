@@ -8,8 +8,11 @@ import {
   RotateCcw,
   AlertCircle,
   Trophy,
+  Send,
+  CheckCircle,
 } from "lucide-react";
 import { Scenario, getRandomScenarios } from "../content/situations"; // Import Scenario interface and data function
+import { submitToLeaderboard, LeaderboardSubmission } from "../services/leaderboardService";
 
 // --- 1. INTERFACE & TYPES ---
 
@@ -30,6 +33,11 @@ interface GameState {
   selectedChoiceIndex: number | null;
   showResult: boolean;
   gameFinished: boolean;
+  playerName: string; // Tên người chơi
+  gameStartTime: number; // Thời gian bắt đầu (timestamp)
+  gameEndTime: number | null; // Thời gian kết thúc (timestamp)
+  leaderboardSubmitted: boolean; // Đã gửi leaderboard chưa
+  leaderboardStatus: 'idle' | 'sending' | 'success' | 'error'; // Trạng thái gửi
 }
 
 // --- 2. CONSTANTS ---
@@ -161,6 +169,11 @@ function DecisionGame() {
     selectedChoiceIndex: null,
     showResult: false,
     gameFinished: false,
+    playerName: "",
+    gameStartTime: 0,
+    gameEndTime: null,
+    leaderboardSubmitted: false,
+    leaderboardStatus: 'idle',
   });
 
   const {
@@ -173,6 +186,9 @@ function DecisionGame() {
     selectedChoiceIndex,
     showResult,
     gameFinished,
+    playerName,
+    leaderboardSubmitted,
+    leaderboardStatus,
   } = gameState;
 
   const handleStartGame = useCallback(() => {
@@ -187,6 +203,11 @@ function DecisionGame() {
       selectedChoiceIndex: null,
       showResult: false,
       gameFinished: false,
+      playerName: "",
+      gameStartTime: Date.now(),
+      gameEndTime: null,
+      leaderboardSubmitted: false,
+      leaderboardStatus: 'idle',
     });
   }, []);
 
@@ -230,12 +251,20 @@ function DecisionGame() {
       stats.CB <= MIN_STAT ||
       stats.NG <= MIN_STAT
     ) {
-      setGameState((prev) => ({ ...prev, gameFinished: true }));
+      setGameState((prev) => ({ 
+        ...prev, 
+        gameFinished: true,
+        gameEndTime: Date.now() 
+      }));
       return;
     }
 
     if (nextRound > TOTAL_ROUNDS) {
-      setGameState((prev) => ({ ...prev, gameFinished: true }));
+      setGameState((prev) => ({ 
+        ...prev, 
+        gameFinished: true,
+        gameEndTime: Date.now() 
+      }));
     } else {
       setGameState((prev) => ({
         ...prev,
@@ -247,6 +276,70 @@ function DecisionGame() {
         showResult: false,
       }));
     }
+  };
+
+  // Hàm gửi dữ liệu lên leaderboard
+  const handleSubmitLeaderboard = async () => {
+    if (leaderboardSubmitted) return;
+
+    // Lấy tên người chơi (có thể prompt hoặc dùng default)
+    const name = playerName.trim() || "Người chơi ẩn danh";
+
+    // Tính tổng điểm
+    const totalScore = stats.CT + stats.KT + stats.CB + stats.NG;
+
+    // Chuẩn bị dữ liệu gửi
+    const submissionData: LeaderboardSubmission = {
+      playerName: name,
+      scores: {
+        politics: stats.CT,
+        economy: stats.KT,
+        society: stats.CB,
+        diplomacy: stats.NG,
+      },
+      totalScore: totalScore,
+      completedAt: new Date().toISOString(),
+      gameRounds: currentRound - 1, // Số vòng thực tế đã chơi
+      openAnswers: [], // Sẽ thêm ở Phase 3
+    };
+
+    // Cập nhật trạng thái đang gửi
+    setGameState((prev) => ({
+      ...prev,
+      leaderboardStatus: 'sending',
+    }));
+
+    try {
+      const response = await submitToLeaderboard(submissionData);
+      
+      if (response.success) {
+        setGameState((prev) => ({
+          ...prev,
+          leaderboardSubmitted: true,
+          leaderboardStatus: 'success',
+        }));
+
+        // Hiển thị thông báo thành công
+        alert(`✅ ${response.message}\n\n${response.data ? `Hạng: ${response.data.rank} / ${response.data.totalPlayers} người chơi` : ''}`);
+      } else {
+        throw new Error(response.message || 'Gửi thất bại');
+      }
+    } catch (error) {
+      console.error('Lỗi khi gửi leaderboard:', error);
+      setGameState((prev) => ({
+        ...prev,
+        leaderboardStatus: 'error',
+      }));
+      alert('❌ Có lỗi xảy ra khi gửi dữ liệu. Vui lòng thử lại!');
+    }
+  };
+
+  // Hàm cập nhật tên người chơi
+  const handlePlayerNameChange = (name: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      playerName: name,
+    }));
   };
 
   const currentScenario = scenarios[currentScenarioIndex];
@@ -315,6 +408,8 @@ function DecisionGame() {
 
   const renderGameScreen = () => {
     if (gameFinished) {
+      const totalScore = stats.CT + stats.KT + stats.CB + stats.NG;
+      
       return (
         <div className="text-center p-8 bg-white rounded-xl shadow-2xl">
           <Trophy className={`w-20 h-20 mx-auto mb-4 ${performance.color}`} />
@@ -324,12 +419,86 @@ function DecisionGame() {
           <p className="text-lg text-gray-700 mb-6">
             {performance.description}
           </p>
-          <div className="grid grid-cols-4 gap-4 text-left mb-8">
+
+          {/* Stats Display */}
+          <div className="grid grid-cols-4 gap-4 text-left mb-6">
             {renderStatImage("CT", stats.CT)}
             {renderStatImage("KT", stats.KT)}
             {renderStatImage("CB", stats.CB)}
             {renderStatImage("NG", stats.NG)}
           </div>
+
+          {/* Total Score */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-2 border-blue-200">
+            <p className="text-sm text-gray-600 mb-1">Tổng điểm</p>
+            <p className="text-4xl font-extrabold text-blue-600">{totalScore}</p>
+            <p className="text-xs text-gray-500 mt-1">Số vòng hoàn thành: {currentRound - 1}/16</p>
+          </div>
+
+          {/* Leaderboard Section */}
+          {!leaderboardSubmitted ? (
+            <div className="mb-6 p-6 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
+              <h3 className="text-lg font-bold text-yellow-800 mb-3 flex items-center justify-center">
+                <Trophy className="w-5 h-5 mr-2" />
+                Gửi kết quả lên Bảng xếp hạng
+              </h3>
+              
+              {/* Input tên người chơi */}
+              <div className="mb-4">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Tên của bạn (tùy chọn)
+                </label>
+                <input
+                  type="text"
+                  value={playerName}
+                  onChange={(e) => handlePlayerNameChange(e.target.value)}
+                  placeholder="Nhập tên hoặc để trống..."
+                  maxLength={30}
+                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition"
+                />
+              </div>
+
+              {/* Nút gửi */}
+              <button
+                onClick={handleSubmitLeaderboard}
+                disabled={leaderboardStatus === 'sending'}
+                className={`w-full flex items-center justify-center px-6 py-3 text-lg font-semibold text-white rounded-lg transition duration-300 shadow-lg
+                  ${leaderboardStatus === 'sending' 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-green-600 hover:bg-green-700'
+                  }
+                `}
+              >
+                {leaderboardStatus === 'sending' ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Đang gửi...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 mr-2" />
+                    Gửi lên Bảng xếp hạng
+                  </>
+                )}
+              </button>
+
+              <p className="text-xs text-gray-500 mt-3">
+                💡 Dữ liệu sẽ được gửi lên server để so sánh với người chơi khác
+              </p>
+            </div>
+          ) : (
+            <div className="mb-6 p-6 bg-green-50 border-2 border-green-300 rounded-lg">
+              <div className="flex items-center justify-center text-green-700 mb-2">
+                <CheckCircle className="w-6 h-6 mr-2" />
+                <h3 className="text-lg font-bold">Đã gửi thành công!</h3>
+              </div>
+              <p className="text-sm text-green-600">
+                Kết quả của bạn đã được lưu vào bảng xếp hạng
+              </p>
+            </div>
+          )}
+
+          {/* Nút chơi lại */}
           <button
             onClick={handleStartGame}
             className="flex items-center justify-center w-full px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg"
