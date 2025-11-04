@@ -11,7 +11,7 @@ import {
   Send,
   CheckCircle,
 } from "lucide-react";
-import { Scenario, getRandomScenarios } from "../content/situations";
+import { Scenario, getRandomScenarios } from "../content/situations.ts";
 import { submitToLeaderboard, LeaderboardSubmission } from "../services/leaderboardService";
 import GameIntro from "./GameIntro";
 import LeaderboardModal from "./LeaderboardModal";
