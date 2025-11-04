@@ -11,7 +11,7 @@ export interface ILeaderboard extends Document {
   totalScore: number;
   gameRounds: number;
   completedAt: Date;
-  openAnswers?: string[];
+  openAnswers: string[];
 }
 
 const LeaderboardSchema: Schema = new Schema(
@@ -23,10 +23,10 @@ const LeaderboardSchema: Schema = new Schema(
       society: { type: Number, required: true, min: 0, max: 100 },
       diplomacy: { type: Number, required: true, min: 0, max: 100 },
     },
-    totalScore: { type: Number, required: true },
-    gameRounds: { type: Number, required: true },
+    totalScore: { type: Number, required: true, index: true },
+    gameRounds: { type: Number, required: true},
     openAnswers: [{ type: String }],
-    completedAt: { type: Date, default: Date.now },
+    completedAt: { type: Date, default: Date.now, index: true},
   },
   {
     timestamps: true,
@@ -34,7 +34,6 @@ const LeaderboardSchema: Schema = new Schema(
 );
 
 // Index
-LeaderboardSchema.index({ totalScore: -1 });
-LeaderboardSchema.index({ completedAt: -1 });
+LeaderboardSchema.index({ totalScore: -1, completedAt: 1 });
 
 export default mongoose.model<ILeaderboard>("Leaderboard", LeaderboardSchema);
