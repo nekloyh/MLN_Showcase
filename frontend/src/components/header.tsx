@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from './logo';
+import LeaderboardModal from './LeaderboardModal';
 
 // Custom navigation link component that handles both router and anchor links
 type NavLinkProps = {
@@ -38,6 +39,7 @@ const menuItems = [
 
 export const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false);
+    const [leaderboardOpen, setLeaderboardOpen] = React.useState(false);
 
     return (
         <header>
@@ -59,19 +61,30 @@ export const HeroHeader = () => {
                             </Link>
                         </div>
 
-                        {/* Mobile Menu Button */}
-                        <button
-                            onClick={() => setMenuState(!menuState)}
-                            aria-label={menuState ? 'Close Menu' : 'Open Menu'}
-                            className="relative z-20 block cursor-pointer p-2.5 lg:hidden"
-                        >
-                            <Menu
-                                className={`size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-180 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}
-                            />
-                            <X
-                                className={`absolute inset-0 m-auto size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-0 scale-100 opacity-100' : '-rotate-180 scale-0 opacity-0'}`}
-                            />
-                        </button>
+                        {/* Desktop Right Side: Leaderboard + Menu Toggle */}
+                        <div className="flex items-center gap-4">
+                            {/* Nút Bảng xếp hạng - Desktop */}
+                            <button
+                                onClick={() => setLeaderboardOpen(true)}
+                                className="hidden lg:block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-150 shadow-sm"
+                            >
+                                Bảng xếp hạng
+                            </button>
+
+                            {/* Mobile Menu Button */}
+                            <button
+                                onClick={() => setMenuState(!menuState)}
+                                aria-label={menuState ? 'Close Menu' : 'Open Menu'}
+                                className="relative z-20 block cursor-pointer p-2.5 lg:hidden"
+                            >
+                                <Menu
+                                    className={`size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-180 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}
+                                />
+                                <X
+                                    className={`absolute inset-0 m-auto size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-0 scale-100 opacity-100' : '-rotate-180 scale-0 opacity-0'}`}
+                                />
+                            </button>
+                        </div>
 
                         {/* Desktop Menu */}
                         <div className="hidden lg:block ml-auto">
@@ -107,11 +120,29 @@ export const HeroHeader = () => {
                                         </NavLink>
                                     </li>
                                 ))}
+                                {/* Nút Bảng xếp hạng cho mobile */}
+                                <li>
+                                    <button
+                                        onClick={() => {
+                                            setLeaderboardOpen(true);
+                                            setMenuState(false);
+                                        }}
+                                        className="w-full px-4 py-2 text-base font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors text-center"
+                                    >
+                                        Bảng xếp hạng
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </nav>
+
+            {/* Leaderboard Modal */}
+            <LeaderboardModal 
+                isOpen={leaderboardOpen} 
+                onClose={() => setLeaderboardOpen(false)} 
+            />
         </header>
     );
 };

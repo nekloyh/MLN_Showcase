@@ -36,7 +36,7 @@ export async function submitToLeaderboard(
   submission: LeaderboardSubmission
 ): Promise<LeaderboardResponse> {
   try {
-    console.log('📊 [LEADERBOARD] Đang gửi dữ liệu:', submission);
+    console.log('[LEADERBOARD] Đang gửi dữ liệu:', submission);
 
     const response = await fetch(`${API_BASE_URL}${LEADERBOARD_ENDPOINT}`, {
       method: 'POST',
@@ -51,14 +51,13 @@ export async function submitToLeaderboard(
     }
 
     const data: LeaderboardResponse = await response.json();
-    console.log('✅ [LEADERBOARD] Gửi thành công:', data);
+    console.log('[LEADERBOARD] Gửi thành công:', data);
     
     return data;
   } catch (error) {
-    console.error('❌ [LEADERBOARD] Lỗi khi gửi:', error);
+    console.error('[LEADERBOARD] Lỗi khi gửi:', error);
     
-    // Mock response khi backend chưa sẵn sàng
-    console.log('🔄 [LEADERBOARD] Sử dụng mock response (backend chưa có)');
+    console.log('[LEADERBOARD] Sử dụng mock response (backend chưa có)');
     return {
       success: true,
       message: 'Đã gửi thành công! (Mock - Backend chưa kết nối)',
@@ -75,7 +74,7 @@ export async function submitToLeaderboard(
  */
 export async function getLeaderboard(limit: number = 10) {
   try {
-    console.log('📋 [LEADERBOARD] Đang tải bảng xếp hạng...');
+    console.log('[LEADERBOARD] Đang tải bảng xếp hạng...');
     
     const response = await fetch(`${API_BASE_URL}/api/leaderboard?limit=${limit}`);
     
@@ -84,14 +83,13 @@ export async function getLeaderboard(limit: number = 10) {
     }
 
     const data = await response.json();
-    console.log('✅ [LEADERBOARD] Tải thành công:', data);
+    console.log('[LEADERBOARD] Tải thành công:', data);
     
     return data;
   } catch (error) {
-    console.error('❌ [LEADERBOARD] Lỗi khi tải:', error);
+    console.error('[LEADERBOARD] Lỗi khi tải:', error);
     
-    // Mock data
-    console.log('🔄 [LEADERBOARD] Sử dụng mock data');
+    console.log('[LEADERBOARD] Sử dụng mock data');
     return {
       success: true,
       data: [],

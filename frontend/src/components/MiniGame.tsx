@@ -11,8 +11,10 @@ import {
   Send,
   CheckCircle,
 } from "lucide-react";
-import { Scenario, getRandomScenarios } from "../content/situations"; // Import Scenario interface and data function
+import { Scenario, getRandomScenarios } from "../content/situations";
 import { submitToLeaderboard, LeaderboardSubmission } from "../services/leaderboardService";
+import GameIntro from "./GameIntro";
+import LeaderboardModal from "./LeaderboardModal";
 
 // --- 1. INTERFACE & TYPES ---
 
@@ -33,11 +35,13 @@ interface GameState {
   selectedChoiceIndex: number | null;
   showResult: boolean;
   gameFinished: boolean;
-  playerName: string; // Tên người chơi
-  gameStartTime: number; // Thời gian bắt đầu (timestamp)
-  gameEndTime: number | null; // Thời gian kết thúc (timestamp)
-  leaderboardSubmitted: boolean; // Đã gửi leaderboard chưa
-  leaderboardStatus: 'idle' | 'sending' | 'success' | 'error'; // Trạng thái gửi
+  playerName: string;
+  gameStartTime: number;
+  gameEndTime: number | null;
+  leaderboardSubmitted: boolean;
+  leaderboardStatus: 'idle' | 'sending' | 'success' | 'error';
+  showIntro: boolean;
+  showLeaderboardModal: boolean;
 }
 
 // --- 2. CONSTANTS ---
@@ -87,7 +91,7 @@ const getStatImagePath = (
 ): string => {
   const prefix = getStatPrefix(statKey);
   const level = getStatImageLevel(score);
-  return `/assets/images/stats/${prefix}_${level}.png`;
+  return `/images/${prefix}_${level}.png`;
 };
 
 // Helper function to get the stat display name
@@ -122,32 +126,44 @@ const getIcon = (iconName: "CT" | "KT" | "CB" | "NG") => {
 };
 
 const getStatColor = (value: number) => {
-  if (value >= 150) return "text-green-500";
-  if (value >= 100) return "text-green-400";
-  if (value >= 50) return "text-yellow-500";
+  if (value >= 80) return "text-green-500";
+  if (value >= 60) return "text-green-400";
+  if (value >= 40) return "text-yellow-500";
+  if (value >= 20) return "text-orange-500";
   return "text-red-500";
 };
 
 const getPerformanceLevel = (stats: PlayerStats) => {
-  const avg = (stats.CT + stats.KT + stats.CB + stats.NG) / 4;
-  if (avg >= 150)
+  const totalScore = stats.CT + stats.KT + stats.CB + stats.NG;
+  const avg = totalScore / 4;
+  
+  // Tổng điểm tối đa: 400 (4 chỉ số x 100)
+  // Điểm trung bình mỗi chỉ số: 0-100
+  
+  if (avg >= 80)
     return {
       title: "Thiên Tài Lãnh Đạo",
       description:
         "Đất nước thịnh vượng, dân giàu nước mạnh, uy tín quốc tế cao.",
       color: "text-green-600",
     };
-  if (avg >= 100)
+  if (avg >= 65)
     return {
       title: "Lãnh Đạo Xuất Sắc",
       description: "Đất nước phát triển ổn định, vượt qua mọi thử thách.",
       color: "text-blue-600",
     };
-  if (avg >= 50)
+  if (avg >= 45)
     return {
       title: "Lãnh Đạo Trung Bình",
       description: "Đất nước duy trì được sự ổn định, cần cải thiện nhiều mặt.",
       color: "text-yellow-600",
+    };
+  if (avg >= 25)
+    return {
+      title: "Lãnh Đạo Yếu Kém",
+      description: "Đất nước gặp nhiều khó khăn, cần thay đổi chiến lược.",
+      color: "text-orange-600",
     };
   return {
     title: "Thất Bại Thảm Hại",
@@ -174,6 +190,8 @@ function DecisionGame() {
     gameEndTime: null,
     leaderboardSubmitted: false,
     leaderboardStatus: 'idle',
+    showIntro: true,
+    showLeaderboardModal: false,
   });
 
   const {
@@ -189,6 +207,8 @@ function DecisionGame() {
     playerName,
     leaderboardSubmitted,
     leaderboardStatus,
+    showIntro,
+    showLeaderboardModal,
   } = gameState;
 
   const handleStartGame = useCallback(() => {
@@ -208,6 +228,8 @@ function DecisionGame() {
       gameEndTime: null,
       leaderboardSubmitted: false,
       leaderboardStatus: 'idle',
+      showIntro: false,
+      showLeaderboardModal: false,
     });
   }, []);
 
@@ -282,13 +304,9 @@ function DecisionGame() {
   const handleSubmitLeaderboard = async () => {
     if (leaderboardSubmitted) return;
 
-    // Lấy tên người chơi (có thể prompt hoặc dùng default)
     const name = playerName.trim() || "Người chơi ẩn danh";
-
-    // Tính tổng điểm
     const totalScore = stats.CT + stats.KT + stats.CB + stats.NG;
 
-    // Chuẩn bị dữ liệu gửi
     const submissionData: LeaderboardSubmission = {
       playerName: name,
       scores: {
@@ -299,11 +317,10 @@ function DecisionGame() {
       },
       totalScore: totalScore,
       completedAt: new Date().toISOString(),
-      gameRounds: currentRound - 1, // Số vòng thực tế đã chơi
-      openAnswers: [], // Sẽ thêm ở Phase 3
+      gameRounds: currentRound - 1,
+      openAnswers: [],
     };
 
-    // Cập nhật trạng thái đang gửi
     setGameState((prev) => ({
       ...prev,
       leaderboardStatus: 'sending',
@@ -319,18 +336,21 @@ function DecisionGame() {
           leaderboardStatus: 'success',
         }));
 
-        // Hiển thị thông báo thành công
-        alert(`✅ ${response.message}\n\n${response.data ? `Hạng: ${response.data.rank} / ${response.data.totalPlayers} người chơi` : ''}`);
+        const rankInfo = response.data 
+          ? `\n\nHạng: ${response.data.rank} / ${response.data.totalPlayers} người chơi` 
+          : '';
+        alert(`Đã gửi thành công!\n${response.message}${rankInfo}`);
       } else {
         throw new Error(response.message || 'Gửi thất bại');
       }
     } catch (error) {
-      console.error('Lỗi khi gửi leaderboard:', error);
       setGameState((prev) => ({
         ...prev,
         leaderboardStatus: 'error',
       }));
-      alert('❌ Có lỗi xảy ra khi gửi dữ liệu. Vui lòng thử lại!');
+      
+      const errorMessage = error instanceof Error ? error.message : 'Lỗi không xác định';
+      alert(`Có lỗi xảy ra khi gửi dữ liệu.\n\nChi tiết: ${errorMessage}\n\nVui lòng thử lại!`);
     }
   };
 
@@ -483,7 +503,7 @@ function DecisionGame() {
               </button>
 
               <p className="text-xs text-gray-500 mt-3">
-                💡 Dữ liệu sẽ được gửi lên server để so sánh với người chơi khác
+                Dữ liệu sẽ được gửi lên server để so sánh với người chơi khác
               </p>
             </div>
           ) : (
@@ -495,6 +515,12 @@ function DecisionGame() {
               <p className="text-sm text-green-600">
                 Kết quả của bạn đã được lưu vào bảng xếp hạng
               </p>
+              <button
+                onClick={() => setGameState(prev => ({ ...prev, showLeaderboardModal: true }))}
+                className="mt-4 w-full px-4 py-2 text-base font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+              >
+                Xem Bảng xếp hạng
+              </button>
             </div>
           )}
 
@@ -630,7 +656,9 @@ function DecisionGame() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden min-h-[600px]">
-        {currentRound === 0 ? (
+        {showIntro ? (
+          <GameIntro onStart={handleStartGame} />
+        ) : currentRound === 0 ? (
           <div className="text-center p-12">
             <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
               Trò Chơi Lãnh Đạo Quốc Gia
@@ -668,6 +696,12 @@ function DecisionGame() {
           renderGameScreen()
         )}
       </div>
+      
+      {/* Leaderboard Modal */}
+      <LeaderboardModal 
+        isOpen={showLeaderboardModal} 
+        onClose={() => setGameState(prev => ({ ...prev, showLeaderboardModal: false }))} 
+      />
     </div>
   );
 }
