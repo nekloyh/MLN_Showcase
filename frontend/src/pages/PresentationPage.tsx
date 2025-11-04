@@ -12,7 +12,9 @@ interface ChapterSection {
 }
 
 const PresentationPage: React.FC = () => {
-  const [selectedSection, setSelectedSection] = useState<ChapterSection | null>(null);
+  const [selectedSection, setSelectedSection] = useState<ChapterSection | null>(
+    null
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [visibleSections, setVisibleSections] = useState<number[]>([]);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
@@ -84,7 +86,10 @@ const PresentationPage: React.FC = () => {
       { year: "1867", note: "Karl Marx xuất bản Tập I 'Tư Bản'" },
       { year: "1885-1894", note: "Engels hoàn thành Tập II, III 'Tư Bản'" },
       { year: "1916", note: "Lenin phát triển lý luận về chủ nghĩa đế quốc" },
-      { year: "Hiện nay", note: "Kinh tế chính trị Mác-Lênin vẫn là công cụ sắc bén" },
+      {
+        year: "Hiện nay",
+        note: "Kinh tế chính trị Mác-Lênin vẫn là công cụ sắc bén",
+      },
     ],
   };
 
@@ -93,15 +98,22 @@ const PresentationPage: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute("data-section-index") || "0", 10);
-            setVisibleSections((prev) => (prev.includes(index) ? prev : [...prev, index]));
+            const index = parseInt(
+              entry.target.getAttribute("data-section-index") || "0",
+              10
+            );
+            setVisibleSections((prev) =>
+              prev.includes(index) ? prev : [...prev, index]
+            );
           }
         });
       },
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll(".section-card").forEach((card) => observer.observe(card));
+    document
+      .querySelectorAll(".section-card")
+      .forEach((card) => observer.observe(card));
     return () => observer.disconnect();
   }, [chapterSections]);
 
@@ -132,7 +144,9 @@ const PresentationPage: React.FC = () => {
             <span className="block text-marx-red mt-2">Mác - Lênin</span>
           </h1>
           <p className="text-lg text-gray-700 mb-10 max-w-3xl mx-auto">
-            Khám phá học thuyết cốt lõi về <strong>hàng hóa</strong>, <strong>giá trị</strong>, <strong>giá trị thặng dư</strong> và vai trò của thị trường trong phân phối của cải xã hội.
+            Khám phá học thuyết cốt lõi về <strong>hàng hóa</strong>,{" "}
+            <strong>giá trị</strong>, <strong>giá trị thặng dư</strong> và vai
+            trò của thị trường trong phân phối của cải xã hội.
           </p>
 
           {/* Key Themes */}
@@ -153,7 +167,9 @@ const PresentationPage: React.FC = () => {
               "{inspirationalQuotes[currentQuoteIndex]}"
             </p>
             <p className="text-right text-sm text-lenin-yellow-dark mt-4 font-medium">
-              — {inspirationalQuotes[currentQuoteIndex].split(' - ')[1] || 'Karl Marx'}
+              —{" "}
+              {inspirationalQuotes[currentQuoteIndex].split(" - ")[1] ||
+                "Karl Marx"}
             </p>
           </div>
         </div>
@@ -169,8 +185,12 @@ const PresentationPage: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {/* Core Theories */}
             <div className="bg-white p-8 rounded-2xl shadow-card border border-marx-red-light">
-              <div className="w-14 h-14 bg-marx-red text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">1</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Lý Thuyết Nền Tảng</h3>
+              <div className="w-14 h-14 bg-marx-red text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                1
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Lý Thuyết Nền Tảng
+              </h3>
               <ul className="space-y-3 text-gray-700">
                 {economicsOverview.coreTheories.map((t, i) => (
                   <li key={i} className="flex items-start">
@@ -183,8 +203,12 @@ const PresentationPage: React.FC = () => {
 
             {/* Applications */}
             <div className="bg-white p-8 rounded-2xl shadow-card border border-lenin-yellow-light">
-              <div className="w-14 h-14 bg-lenin-yellow text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">2</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Ứng Dụng Thực Tiễn</h3>
+              <div className="w-14 h-14 bg-lenin-yellow text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                2
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Ứng Dụng Thực Tiễn
+              </h3>
               <ul className="space-y-3 text-gray-700">
                 {economicsOverview.application.map((a, i) => (
                   <li key={i} className="flex items-start">
@@ -197,12 +221,18 @@ const PresentationPage: React.FC = () => {
 
             {/* Timeline */}
             <div className="bg-white p-8 rounded-2xl shadow-card border border-marx-red-light">
-              <div className="w-14 h-14 bg-marx-red text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">3</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Dòng Thời Gian</h3>
+              <div className="w-14 h-14 bg-marx-red text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                3
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Dòng Thời Gian
+              </h3>
               <div className="space-y-4 text-sm">
                 {economicsOverview.timeline.map((item, i) => (
                   <div key={i} className="flex items-start">
-                    <span className="font-bold text-marx-red mr-2">{item.year}:</span>
+                    <span className="font-bold text-marx-red mr-2">
+                      {item.year}:
+                    </span>
                     <span className="text-gray-700">{item.note}</span>
                   </div>
                 ))}
@@ -229,16 +259,28 @@ const PresentationPage: React.FC = () => {
                 data-section-index={index}
                 onClick={() => openModal(section)}
                 className={`section-card group bg-white rounded-2xl shadow-card border border-gray-200 p-6 cursor-pointer transition-all duration-300 hover:shadow-card-hover hover:border-marx-red-light hover:-translate-y-1 ${
-                  visibleSections.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  visibleSections.includes(index)
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-3xl font-bold text-marx-red">
-                    {String(section.id).padStart(2, '0')}
+                    {String(section.id).padStart(2, "0")}
                   </span>
                   <div className="w-12 h-12 bg-gradient-to-br from-marx-red to-lenin-yellow rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -248,13 +290,27 @@ const PresentationPage: React.FC = () => {
                 </h3>
 
                 <p className="text-gray-600 text-sm line-clamp-3 mb-4">
-                  {section.content.replace(/[#*>]/g, '').substring(0, 130).trim()}...
+                  {section.content
+                    .replace(/[#*>]/g, "")
+                    .substring(0, 130)
+                    .trim()}
+                  ...
                 </p>
 
                 <button className="text-marx-red hover:text-marx-red-hover font-semibold text-sm flex items-center transition-colors">
                   Xem chi tiết
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
                   </svg>
                 </button>
               </div>
@@ -264,7 +320,11 @@ const PresentationPage: React.FC = () => {
       </section>
 
       {/* Modal */}
-      <Modal isOpen={isModalOpen} onClose={closeModal} title={selectedSection?.title || ""}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title={selectedSection?.title || ""}
+      >
         {selectedSection && (
           <div className="prose prose-lg max-w-none text-gray-800">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>

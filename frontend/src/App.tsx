@@ -1,12 +1,12 @@
 // src/App.tsx
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
 
 // Import các trang
-import HeroSection from './components/HeroSection';
-import MiniGame from './components/MiniGame';
-import PresentationPage from './pages/PresentationPage';
-import TimelinePage from './pages/TimelinePage';
+import HeroSection from "./components/HeroSection";
+import MiniGame from "./components/MiniGame";
+import PresentationPage from "./pages/PresentationPage";
+import TimelinePage from "./pages/TimelinePage";
 
 export default function App() {
   return (

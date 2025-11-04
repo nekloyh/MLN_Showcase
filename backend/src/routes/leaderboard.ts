@@ -7,6 +7,6 @@ import {
 const router = express.Router();
 
 router.post("/submit", submitScore);
-router.get("/", getLeaderboard);
+router.get("/top", getLeaderboard);
 
 export default router;

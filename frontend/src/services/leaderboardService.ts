@@ -3,9 +3,9 @@
 export interface LeaderboardSubmission {
   playerName: string;
   scores: {
-    politics: number;  // CT - Chính trị
-    economy: number;   // KT - Kinh tế
-    society: number;   // CB - Xã hội
+    politics: number; // CT - Chính trị
+    economy: number; // KT - Kinh tế
+    society: number; // CB - Xã hội
     diplomacy: number; // NG - Ngoại giao
   };
   totalScore: number;
@@ -24,8 +24,8 @@ export interface LeaderboardResponse {
 }
 
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-const LEADERBOARD_ENDPOINT = '/api/leaderboard/submit';
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const LEADERBOARD_ENDPOINT = "/api/leaderboard/submit";
 
 /**
  * Gửi dữ liệu leaderboard lên server
@@ -36,12 +36,12 @@ export async function submitToLeaderboard(
   submission: LeaderboardSubmission
 ): Promise<LeaderboardResponse> {
   try {
-    console.log('📊 [LEADERBOARD] Đang gửi dữ liệu:', submission);
+    console.log("[LEADERBOARD] Đang gửi dữ liệu:", submission);
 
     const response = await fetch(`${API_BASE_URL}${LEADERBOARD_ENDPOINT}`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(submission),
     });
@@ -51,17 +51,16 @@ export async function submitToLeaderboard(
     }
 
     const data: LeaderboardResponse = await response.json();
-    console.log('✅ [LEADERBOARD] Gửi thành công:', data);
-    
+    console.log("[LEADERBOARD] Gửi thành công:", data);
+
     return data;
   } catch (error) {
-    console.error('❌ [LEADERBOARD] Lỗi khi gửi:', error);
-    
-    // Mock response khi backend chưa sẵn sàng
-    console.log('🔄 [LEADERBOARD] Sử dụng mock response (backend chưa có)');
+    console.error("[LEADERBOARD] Lỗi khi gửi:", error);
+
+    console.log("[LEADERBOARD] Sử dụng mock response (backend chưa có)");
     return {
       success: true,
-      message: 'Đã gửi thành công! (Mock - Backend chưa kết nối)',
+      message: "Đã gửi thành công! (Mock - Backend chưa kết nối)",
       data: {
         rank: Math.floor(Math.random() * 100) + 1,
         totalPlayers: Math.floor(Math.random() * 500) + 100,
@@ -73,28 +72,24 @@ export async function submitToLeaderboard(
 /**
  * Lấy danh sách bảng xếp hạng (sẽ implement sau)
  */
-export async function getLeaderboard(limit: number = 10) {
+export async function getLeaderboard() {
   try {
-    console.log('📋 [LEADERBOARD] Đang tải bảng xếp hạng...');
-    
-    const response = await fetch(`${API_BASE_URL}/api/leaderboard?limit=${limit}`);
-    
+    console.log("[LEADERBOARD] Đang tải bảng xếp hạng...");
+
+    const response = await fetch(`${API_BASE_URL}/api/leaderboard/top`);
+
     if (!response.ok) {
       throw new Error(`HTTP Error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('✅ [LEADERBOARD] Tải thành công:', data);
-    
+    console.log("[LEADERBOARD] Tải thành công:", data);
+
     return data;
   } catch (error) {
-    console.error('❌ [LEADERBOARD] Lỗi khi tải:', error);
-    
-    // Mock data
-    console.log('🔄 [LEADERBOARD] Sử dụng mock data');
-    return {
-      success: true,
-      data: [],
-    };
+    console.error("[LEADERBOARD] Lỗi khi tải:", error);
+
+    // Không cần mock data vì đã xử lý trong LeaderboardModal.tsx
+    throw error;
   }
 }

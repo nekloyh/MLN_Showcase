@@ -56,28 +56,24 @@ export const submitScore = async (req: Request, res: Response) => {
 };
 
 export const getLeaderboard = async (req: Request, res: Response) => {
+  // Yêu cầu chỉ lấy top 10, không cần phân trang
+  const limit = 10;
   try {
-    const limit = parseInt(req.query.limit as string) || 10;
-    const page = parseInt(req.query.page as string) || 1;
-    const skip = (page - 1) * limit;
-
     const leaderboard = await Leaderboard.find()
       .sort({ totalScore: -1, completedAt: 1 })
       .limit(limit)
-      .skip(skip)
-      .select("-__v");
+      .select("playerName totalScore completedAt scores") // Thêm scores để frontend có thể dùng
+      .exec();
 
-    const total = await Leaderboard.countDocuments();
+    // Thêm trường rank
+    const rankedLeaderboard = leaderboard.map((entry, index) => ({
+      ...entry.toObject(),
+      rank: index + 1,
+    }));
 
     res.json({
       success: true,
-      data: leaderboard,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
+      data: rankedLeaderboard,
     });
   } catch (error) {
     console.error("Error getting leaderboard:", error);

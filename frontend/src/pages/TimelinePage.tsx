@@ -1,12 +1,14 @@
 // pages/TimelinePage.tsx
-import { useEffect, useState } from 'react';
-import TimelineEventDetail from '../components/TimelineEventDetail';
-import Modal from '../components/ui/modal';
-import timelineEvents from '../data/timeline-events.json';
-import { TimelineEvent } from '../types/timeline';
+import { useEffect, useState } from "react";
+import TimelineEventDetail from "../components/TimelineEventDetail";
+import Modal from "../components/ui/modal";
+import timelineEvents from "../data/timeline-events.json";
+import { TimelineEvent } from "../types/timeline";
 
 export default function TimelinePage() {
-  const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(
+    null
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -24,9 +26,7 @@ export default function TimelinePage() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-gradient-to-b from-white via-lenin-yellow-light to-white pt-20"
-    >
+    <div className="min-h-screen bg-gradient-to-b from-white via-lenin-yellow-light to-white pt-20">
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -46,12 +46,12 @@ export default function TimelinePage() {
               <div
                 key={event.id}
                 className={`relative flex items-center ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                  index % 2 === 0 ? "flex-row" : "flex-row-reverse"
                 }`}
               >
                 <div
                   className={`w-5/12 ${
-                    index % 2 === 0 ? 'pr-12 text-right' : 'pl-12 text-left'
+                    index % 2 === 0 ? "pr-12 text-right" : "pl-12 text-left"
                   }`}
                 >
                   <button
@@ -102,7 +102,7 @@ export default function TimelinePage() {
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
-        title={selectedEvent?.title ?? ''}
+        title={selectedEvent?.title ?? ""}
       >
         {selectedEvent && <TimelineEventDetail event={selectedEvent} />}
       </Modal>

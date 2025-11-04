@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from './logo';
+import LeaderboardModal from './LeaderboardModal';
 
 // Custom navigation link component that handles both router and anchor links
 type NavLinkProps = {
@@ -33,11 +34,13 @@ const menuItems = [
     { name: 'Dòng Thời Gian', href: '/timeline' },
     { name: 'Nội Dung Chi Tiết', href: '/presentations' },
     { name: 'Tìm Hiểu Thêm', href: '/#about' },
+    { name: 'Bảng xếp hạng', href: '#leaderboard' },
     { name: 'Công Bố AI', href: '/ai-disclosure' },
 ];
 
 export const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false);
+    const [leaderboardOpen, setLeaderboardOpen] = React.useState(false);
 
     return (
         <header>
@@ -59,19 +62,22 @@ export const HeroHeader = () => {
                             </Link>
                         </div>
 
-                        {/* Mobile Menu Button */}
-                        <button
-                            onClick={() => setMenuState(!menuState)}
-                            aria-label={menuState ? 'Close Menu' : 'Open Menu'}
-                            className="relative z-20 block cursor-pointer p-2.5 lg:hidden"
-                        >
-                            <Menu
-                                className={`size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-180 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}
-                            />
-                            <X
-                                className={`absolute inset-0 m-auto size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-0 scale-100 opacity-100' : '-rotate-180 scale-0 opacity-0'}`}
-                            />
-                        </button>
+                        {/* Desktop Right Side: Menu Toggle */}
+                        <div className="flex items-center gap-4">
+                            {/* Mobile Menu Button */}
+                            <button
+                                onClick={() => setMenuState(!menuState)}
+                                aria-label={menuState ? 'Close Menu' : 'Open Menu'}
+                                className="relative z-20 block cursor-pointer p-2.5 lg:hidden"
+                            >
+                                <Menu
+                                    className={`size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-180 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}
+                                />
+                                <X
+                                    className={`absolute inset-0 m-auto size-6 text-marx-red transition-all duration-200 ${menuState ? 'rotate-0 scale-100 opacity-100' : '-rotate-180 scale-0 opacity-0'}`}
+                                />
+                            </button>
+                        </div>
 
                         {/* Desktop Menu */}
                         <div className="hidden lg:block ml-auto">
@@ -80,6 +86,11 @@ export const HeroHeader = () => {
                                     <li key={index}>
                                         <NavLink
                                             href={item.href}
+                                            onClick={() => {
+                                                if (item.href === '#leaderboard') {
+                                                    setLeaderboardOpen(true);
+                                                }
+                                            }}
                                             className="text-gray-700 hover:text-marx-red block duration-150 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-marx-red after:transition-all hover:after:w-full pb-1"
                                         >
                                             <span>{item.name}</span>
@@ -100,18 +111,33 @@ export const HeroHeader = () => {
                                     <li key={index}>
                                         <NavLink
                                             href={item.href}
-                                            onClick={() => setMenuState(false)}
+                                            onClick={() => {
+                                                setMenuState(false);
+                                                if (item.href === '#leaderboard') {
+                                                    setLeaderboardOpen(true);
+                                                }
+                                            }}
                                             className="block text-gray-800 hover:text-marx-red transition-colors"
                                         >
                                             {item.name}
                                         </NavLink>
                                     </li>
                                 ))}
+                                {/* Nút Bảng xếp hạng cho mobile */}
+                                <li>
+
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </nav>
+
+            {/* Leaderboard Modal */}
+            <LeaderboardModal 
+                isOpen={leaderboardOpen} 
+                onClose={() => setLeaderboardOpen(false)} 
+            />
         </header>
     );
 };
