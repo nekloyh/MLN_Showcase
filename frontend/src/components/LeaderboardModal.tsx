@@ -1,12 +1,17 @@
-// LeaderboardModal.tsx - Modal hiển thị bảng xếp hạng
-// Sử dụng Modal component có sẵn, không có icon, style đồng bộ
-
+import { useState, useEffect } from 'react';
 import Modal from './ui/modal';
+import axios from 'axios';
 
 interface LeaderboardEntry {
   rank: number;
-  name: string;
-  score: number;
+  playerName: string;
+  totalScore: number;
+}
+
+interface LeaderboardAPIResponse {
+  success: boolean;
+  message?: string;
+  data: LeaderboardEntry[];
 }
 
 interface LeaderboardModalProps {
@@ -14,21 +19,39 @@ interface LeaderboardModalProps {
   onClose: () => void;
 }
 
-// Mock data cho bảng xếp hạng (sẽ thay bằng API call sau)
-const mockLeaderboardData: LeaderboardEntry[] = [
-  { rank: 1, name: "Người chơi A", score: 380 },
-  { rank: 2, name: "Game Thủ B", score: 375 },
-  { rank: 3, name: "Chiến lược gia C", score: 360 },
-  { rank: 4, name: "Nhà lãnh đạo D", score: 355 },
-  { rank: 5, name: "Người chơi E", score: 340 },
-  { rank: 6, name: "Game Thủ F", score: 330 },
-  { rank: 7, name: "Chiến lược gia G", score: 325 },
-  { rank: 8, name: "Nhà lãnh đạo H", score: 310 },
-  { rank: 9, name: "Người chơi I", score: 300 },
-  { rank: 10, name: "Game Thủ K", score: 295 }
-];
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalProps) {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      const fetchLeaderboard = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+          const response = await axios.get<LeaderboardAPIResponse>(`${API_URL}/api/leaderboard/top`);
+          if (response.data.success) {
+            // API trả về dữ liệu đã được định dạng, không cần map lại
+            const data: LeaderboardEntry[] = response.data.data;
+            setLeaderboardData(data);
+          } else {
+            setError(response.data.message || 'Lỗi không xác định khi tải bảng xếp hạng.');
+          }
+        } catch (err) {
+          console.error('Fetch leaderboard error:', err);
+          setError('Không thể kết nối đến máy chủ API.');
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchLeaderboard();
+    }
+  }, [isOpen]);
+
+  const dataToDisplay = leaderboardData.length > 0 ? leaderboardData : [];
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Bảng xếp hạng">
       <div className="space-y-4">
@@ -38,17 +61,36 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
         </p>
 
         {/* Bảng xếp hạng */}
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
-            <thead>
-              <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                <th className="px-6 py-3 text-left text-sm font-bold">Hạng</th>
-                <th className="px-6 py-3 text-left text-sm font-bold">Tên</th>
-                <th className="px-6 py-3 text-right text-sm font-bold">Điểm</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mockLeaderboardData.map((entry, index) => (
+        {isLoading && (
+          <div className="text-center py-4 text-blue-600 font-semibold">
+            Đang tải bảng xếp hạng...
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-4 text-red-600 font-semibold">
+            Lỗi: {error}
+          </div>
+        )}
+
+        {!isLoading && !error && dataToDisplay.length === 0 && (
+          <div className="text-center py-4 text-gray-500">
+            Chưa có dữ liệu bảng xếp hạng.
+          </div>
+        )}
+
+        {!isLoading && !error && dataToDisplay.length > 0 && (
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+              <thead>
+                <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+                  <th className="px-6 py-3 text-left text-sm font-bold">Hạng</th>
+                  <th className="px-6 py-3 text-left text-sm font-bold">Tên</th>
+                  <th className="px-6 py-3 text-right text-sm font-bold">Điểm</th>
+                </tr>
+              </thead>
+              <tbody>
+              {dataToDisplay.map((entry, index) => (
                 <tr
                   key={entry.rank}
                   className={`border-b border-gray-200 transition-colors hover:bg-blue-50 ${
@@ -66,11 +108,11 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
                     </span>
                   </td>
                   <td className="px-6 py-4 font-semibold text-gray-800">
-                    {entry.name}
+                    {entry.playerName}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <span className="font-bold text-blue-600 text-lg">
-                      {entry.score}
+                      {entry.totalScore}
                     </span>
                   </td>
                 </tr>
@@ -78,6 +120,7 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
             </tbody>
           </table>
         </div>
+        )}
 
         {/* Footer note */}
         <div className="text-center text-sm text-gray-500 mt-4">

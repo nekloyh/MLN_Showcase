@@ -142,7 +142,11 @@
     "detailContent": {
       "context": "Liên Xô (1922-1991) và Trung Quốc (từ 1949) xây dựng chế độ XHCN, tạo ra hệ thống lý luận Kinh tế chính trị XHCN. Các nhà lý luận Xô-viết và Trung Quốc phát triển lý thuyết về kinh tế kế hoạch hóa, chế độ công hữu, phân phối theo lao động.",
       "significance": "Kinh tế chính trị XHCN nghiên cứu các QUY LUẬT KINH TẾ của chế độ XHCN: quy luật ưu tiên phát triển sản xuất tư liệu, quy luật phân phối theo lao động, quy luật kế hoạch hóa. Đây là sự mở rộng của Kinh tế chính trị Mác-Lênin sang lĩnh vực mới.",
-      "keyFigures": ["Joseph Stalin", "Mao Trạch Đông", "Các nhà kinh tế Xô-viết"],
+      "keyFigures": [
+        "Joseph Stalin",
+        "Mao Trạch Đông",
+        "Các nhà kinh tế Xô-viết"
+      ],
       "outcomes": [
         "Lý luận về kinh tế kế hoạch hóa tập trung",
         "Chế độ công hữu về tư liệu sản xuất",
@@ -180,7 +184,11 @@
     "detailContent": {
       "context": "Thế kỷ 21: Toàn cầu hóa, cách mạng công nghiệp 4.0, khủng hoảng tài chính 2008, đại dịch COVID-19, biến đổi khí hậu. Các mâu thuẫn của CNTB ngày càng sâu sắc: bất bình đẳng tăng, khủng hoảng môi trường, khủng hoảng kinh tế chu kỳ.",
       "significance": "Kinh tế chính trị Mác-Lênin VẪN CÒN NGUYÊN GIÁ TRỊ để phân tích: (1) Bóc lột lao động trong kinh tế số (gig economy), (2) Độc quyền của các tập đoàn công nghệ (Big Tech), (3) Khủng hoảng thừa thãi và thất nghiệp công nghệ, (4) Mâu thuẫn giữa phát triển và môi trường.",
-      "keyFigures": ["Các nhà kinh tế Mác chủ nghĩa hiện đại", "Thomas Piketty", "David Harvey"],
+      "keyFigures": [
+        "Các nhà kinh tế Mác chủ nghĩa hiện đại",
+        "Thomas Piketty",
+        "David Harvey"
+      ],
       "outcomes": [
         "Phân tích tư bản chủ nghĩa số (digital capitalism)",
         "Nghiên cứu bất bình đẳng toàn cầu (Piketty: r > g)",

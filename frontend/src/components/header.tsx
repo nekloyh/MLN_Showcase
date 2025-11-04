@@ -34,6 +34,7 @@ const menuItems = [
     { name: 'Dòng Thời Gian', href: '/timeline' },
     { name: 'Nội Dung Chi Tiết', href: '/presentations' },
     { name: 'Tìm Hiểu Thêm', href: '/#about' },
+    { name: 'Bảng xếp hạng', href: '#leaderboard' },
     { name: 'Công Bố AI', href: '/ai-disclosure' },
 ];
 
@@ -61,16 +62,8 @@ export const HeroHeader = () => {
                             </Link>
                         </div>
 
-                        {/* Desktop Right Side: Leaderboard + Menu Toggle */}
+                        {/* Desktop Right Side: Menu Toggle */}
                         <div className="flex items-center gap-4">
-                            {/* Nút Bảng xếp hạng - Desktop */}
-                            <button
-                                onClick={() => setLeaderboardOpen(true)}
-                                className="hidden lg:block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-150 shadow-sm"
-                            >
-                                Bảng xếp hạng
-                            </button>
-
                             {/* Mobile Menu Button */}
                             <button
                                 onClick={() => setMenuState(!menuState)}
@@ -93,6 +86,11 @@ export const HeroHeader = () => {
                                     <li key={index}>
                                         <NavLink
                                             href={item.href}
+                                            onClick={() => {
+                                                if (item.href === '#leaderboard') {
+                                                    setLeaderboardOpen(true);
+                                                }
+                                            }}
                                             className="text-gray-700 hover:text-marx-red block duration-150 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-marx-red after:transition-all hover:after:w-full pb-1"
                                         >
                                             <span>{item.name}</span>
@@ -113,7 +111,12 @@ export const HeroHeader = () => {
                                     <li key={index}>
                                         <NavLink
                                             href={item.href}
-                                            onClick={() => setMenuState(false)}
+                                            onClick={() => {
+                                                setMenuState(false);
+                                                if (item.href === '#leaderboard') {
+                                                    setLeaderboardOpen(true);
+                                                }
+                                            }}
                                             className="block text-gray-800 hover:text-marx-red transition-colors"
                                         >
                                             {item.name}
@@ -122,15 +125,7 @@ export const HeroHeader = () => {
                                 ))}
                                 {/* Nút Bảng xếp hạng cho mobile */}
                                 <li>
-                                    <button
-                                        onClick={() => {
-                                            setLeaderboardOpen(true);
-                                            setMenuState(false);
-                                        }}
-                                        className="w-full px-4 py-2 text-base font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors text-center"
-                                    >
-                                        Bảng xếp hạng
-                                    </button>
+
                                 </li>
                             </ul>
                         </div>
