@@ -10,8 +10,8 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
-node_modules
-dist
+node_modules/
+dist/
 dist-ssr
 *.local
 
@@ -26,6 +26,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.env.local
 
 content/
 docs/
