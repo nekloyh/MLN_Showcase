@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import Modal from './ui/modal';
+// components/LeaderboardModal.tsx
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Modal from './ui/modal';
 
 interface LeaderboardEntry {
   rank: number;
@@ -27,104 +28,100 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      const fetchLeaderboard = async () => {
-        setIsLoading(true);
-        setError(null);
-        try {
-          const response = await axios.get<LeaderboardAPIResponse>(`${API_URL}/api/leaderboard/top`);
-          if (response.data.success) {
-            // API trả về dữ liệu đã được định dạng, không cần map lại
-            const data: LeaderboardEntry[] = response.data.data;
-            setLeaderboardData(data);
-          } else {
-            setError(response.data.message || 'Lỗi không xác định khi tải bảng xếp hạng.');
-          }
-        } catch (err) {
-          console.error('Fetch leaderboard error:', err);
-          setError('Không thể kết nối đến máy chủ API.');
-        } finally {
-          setIsLoading(false);
+    if (!isOpen) return;
+
+    const fetchLeaderboard = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get<LeaderboardAPIResponse>(`${API_URL}/api/leaderboard/top`);
+        if (response.data.success) {
+          setLeaderboardData(response.data.data);
+        } else {
+          setError(response.data.message || 'Lỗi tải dữ liệu');
         }
-      };
-      fetchLeaderboard();
-    }
+      } catch (err) {
+        console.error(err);
+        setError('Không thể kết nối đến server');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLeaderboard();
   }, [isOpen]);
 
-  const dataToDisplay = leaderboardData.length > 0 ? leaderboardData : [];
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Bảng xếp hạng">
+    <Modal isOpen={isOpen} onClose={onClose} title="Bảng Xếp Hạng">
       <div className="space-y-4">
-        {/* Mô tả */}
-        <p className="text-gray-600 text-center mb-4">
-          Top 10 người chơi xuất sắc nhất
-        </p>
+        <p className="text-center text-gray-600 mb-4">Top 10 người chơi xuất sắc nhất</p>
 
-        {/* Bảng xếp hạng */}
         {isLoading && (
-          <div className="text-center py-4 text-blue-600 font-semibold">
-            Đang tải bảng xếp hạng...
+          <div className="text-center py-8">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-marx-red"></div>
+            <p className="mt-2 text-gray-600">Đang tải...</p>
           </div>
         )}
 
         {error && (
-          <div className="text-center py-4 text-red-600 font-semibold">
-            Lỗi: {error}
+          <div className="text-center py-6 text-red-600 bg-red-50 rounded-lg p-4">
+            <strong>Lỗi:</strong> {error}
           </div>
         )}
 
-        {!isLoading && !error && dataToDisplay.length === 0 && (
-          <div className="text-center py-4 text-gray-500">
-            Chưa có dữ liệu bảng xếp hạng.
+        {!isLoading && !error && leaderboardData.length === 0 && (
+          <div className="text-center py-8 text-gray-500">
+            Chưa có người chơi nào
           </div>
         )}
 
-        {!isLoading && !error && dataToDisplay.length > 0 && (
+        {!isLoading && !error && leaderboardData.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+            <table className="w-full border-collapse bg-white rounded-xl shadow-sm overflow-hidden">
               <thead>
-                <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                  <th className="px-6 py-3 text-left text-sm font-bold">Hạng</th>
-                  <th className="px-6 py-3 text-left text-sm font-bold">Tên</th>
-                  <th className="px-6 py-3 text-right text-sm font-bold">Điểm</th>
+                <tr className="bg-gradient-to-r from-marx-red to-marx-red-hover text-white">
+                  <th className="px-6 py-4 text-left text-sm font-bold">Hạng</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold">Tên</th>
+                  <th className="px-6 py-4 text-right text-sm font-bold">Điểm</th>
                 </tr>
               </thead>
               <tbody>
-              {dataToDisplay.map((entry, index) => (
-                <tr
-                  key={entry.rank}
-                  className={`border-b border-gray-200 transition-colors hover:bg-blue-50 ${
-                    index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-                  }`}
-                >
-                  <td className="px-6 py-4">
-                    <span className={`font-bold text-lg ${
-                      entry.rank === 1 ? 'text-yellow-500' :
-                      entry.rank === 2 ? 'text-gray-400' :
-                      entry.rank === 3 ? 'text-orange-600' :
-                      'text-gray-700'
-                    }`}>
-                      {entry.rank}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 font-semibold text-gray-800">
-                    {entry.playerName}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <span className="font-bold text-blue-600 text-lg">
-                      {entry.totalScore}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                {leaderboardData.map((entry, i) => (
+                  <tr
+                    key={entry.rank}
+                    className={`border-b border-gray-200 transition-all hover:bg-lenin-yellow-light/20 ${
+                      i % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                    }`}
+                  >
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-block w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-sm ${
+                          entry.rank === 1 ? 'bg-lenin-yellow text-marx-red' :
+                          entry.rank === 2 ? 'bg-gray-400' :
+                          entry.rank === 3 ? 'bg-orange-600' :
+                          'bg-gray-300 text-gray-700'
+                        }`}
+                      >
+                        {entry.rank}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 font-semibold text-gray-800">
+                      {entry.playerName}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <span className="text-xl font-bold text-marx-red">
+                        {entry.totalScore.toLocaleString()}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
 
-        {/* Footer note */}
-        <div className="text-center text-sm text-gray-500 mt-4">
-          <p>Dữ liệu cập nhật theo thời gian thực</p>
+        <div className="text-center text-xs text-gray-500 mt-6">
+          Dữ liệu cập nhật theo thời gian thực
         </div>
       </div>
     </Modal>
