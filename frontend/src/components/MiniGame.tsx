@@ -1,18 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
 import {
+  AlertCircle,
+  ArrowRight,
+  CheckCircle,
+  Globe,
+  HeartHandshake,
+  RotateCcw,
+  Send,
   Shield,
   TrendingUp,
-  HeartHandshake,
-  Globe,
-  ArrowRight,
-  RotateCcw,
-  AlertCircle,
   Trophy,
-  Send,
-  CheckCircle,
 } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { Scenario, getRandomScenarios } from "../content/situations.ts";
-import { submitToLeaderboard, LeaderboardSubmission } from "../services/leaderboardService";
+import { LeaderboardSubmission, submitToLeaderboard } from "../services/leaderboardService";
 import GameIntro from "./GameIntro";
 import LeaderboardModal from "./LeaderboardModal";
 
@@ -654,8 +654,11 @@ function DecisionGame() {
   // --- 6. MAIN RENDER ---
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden min-h-[600px]">
+    <div
+  className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat"
+  style={{ backgroundImage: "url('/images/BackgroundGame.png')" }}
+>
+      <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden min-h-[600px] mt-20">
         {showIntro ? (
           <GameIntro onStart={handleStartGame} />
         ) : currentRound === 0 ? (
