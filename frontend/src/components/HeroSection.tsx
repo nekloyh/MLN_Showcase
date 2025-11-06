@@ -17,7 +17,7 @@ export default function HeroSection() {
             <div className="flex flex-col items-center text-center space-y-10">
               <div className="max-w-4xl">
                 <h1 className="text-5xl font-extrabold md:text-6xl xl:text-7xl text-balance leading-tight text-gray-900">
-                  Kinh tế Chính trị — <span className="text-marx-red">Giá trị & Giá trị Thặng dư</span>
+                  Kinh tế Chính trị — <span className="block text-marx-red">Giá trị & Giá trị Thặng dư</span>
                 </h1>
                 <p className="mt-8 text-lg md:text-xl text-pretty max-w-3xl mx-auto text-gray-700 leading-relaxed">
                   Tổng hợp các học thuyết cốt lõi của <strong>Kinh tế chính trị Mác - Lênin</strong>: từ khái niệm hàng hóa, giá trị đến học thuyết giá trị thặng dư và vai trò của thị trường trong phân phối của cải xã hội.
@@ -47,17 +47,6 @@ export default function HeroSection() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section id="about" className="py-20 bg-gray-50">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              Tìm Hiểu Thêm Về Tư Tưởng Mác - Lênin
-            </h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              Khám phá các tài liệu, video, và bài giảng chi tiết về lý luận kinh tế chính trị.
-            </p>
           </div>
         </section>
       </main>
