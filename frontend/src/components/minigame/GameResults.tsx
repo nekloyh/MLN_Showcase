@@ -17,7 +17,7 @@ interface GameResultsProps {
   stats: PlayerStats;
   playerName: string;
   leaderboardSubmitted: boolean;
-  leaderboardStatus: 'idle' | 'sending' | 'success' | 'error';
+  leaderboardStatus: "idle" | "sending" | "success" | "error";
   handlePlayerNameChange: (name: string) => void;
   handleSubmitLeaderboard: () => void;
   handleShowLeaderboardModal: (show: boolean) => void;
@@ -65,16 +65,12 @@ const GameResults = ({
             <img
               src={getStatImagePath(key, stats[key])}
               alt={`Ảnh minh họa chỉ số ${getStatDisplayName(key)}`}
-
-
               className="w-16 h-16 mx-auto mb-2"
             />
             <div className="text-sm font-bold text-gray-400">
               {getStatDisplayName(key)}
             </div>
-            <div className="text-xl font-bold text-white">
-              {stats[key]}
-            </div>
+            <div className="text-xl font-bold text-white">{stats[key]}</div>
           </div>
         ))}
       </div>
@@ -89,17 +85,19 @@ const GameResults = ({
             type="text"
             placeholder="Nhập tên của bạn (tối đa 50 ký tự)"
             value={playerName}
-            onChange={(e) => handlePlayerNameChange(e.target.value.slice(0, 50))}
+            onChange={(e) =>
+              handlePlayerNameChange(e.target.value.slice(0, 50))
+            }
             className="flex-grow p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
-            disabled={leaderboardSubmitted || leaderboardStatus === 'sending'}
+            disabled={leaderboardSubmitted || leaderboardStatus === "sending"}
           />
           <Button
             onClick={handleSubmitLeaderboard}
-            disabled={leaderboardSubmitted || leaderboardStatus === 'sending'}
+            disabled={leaderboardSubmitted || leaderboardStatus === "sending"}
             className="bg-yellow-600 hover:bg-yellow-700 text-gray-900 font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center"
           >
-            {leaderboardStatus === 'sending' ? (
-              'Đang gửi...'
+            {leaderboardStatus === "sending" ? (
+              "Đang gửi..."
             ) : (
               <>
                 <Send className="w-5 h-5 mr-2" />
@@ -108,7 +106,7 @@ const GameResults = ({
             )}
           </Button>
         </div>
-        {leaderboardStatus === 'success' && (
+        {leaderboardStatus === "success" && (
           <div className="text-green-400 font-medium flex items-center">
             <CheckCircle className="w-5 h-5 mr-2" />
             Điểm đã được gửi thành công!
@@ -121,7 +119,7 @@ const GameResults = ({
             </Button>
           </div>
         )}
-        {leaderboardStatus === 'error' && (
+        {leaderboardStatus === "error" && (
           <div className="text-red-400 font-medium flex items-center">
             <AlertCircle className="w-5 h-5 mr-2" />
             Gửi điểm thất bại. Vui lòng thử lại.

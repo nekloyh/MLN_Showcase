@@ -1,10 +1,10 @@
 import { ArrowRight, CheckCircle, Send } from "lucide-react";
-import { Scenario } from "../../../public/data/situations";
+import { Scenario } from "../../data/situations";
 import { getStatDisplayName, PlayerStats } from "../../hooks/useGame";
 import { Button } from "../ui/button";
 
 interface GameQuestionProps {
-  currentScenario: Scenario;
+  currentScenario: Scenario | undefined;
   selectedChoiceIndex: number | null;
   showResult: boolean;
   stats: PlayerStats;
@@ -22,10 +22,15 @@ const GameQuestion = ({
   handleSubmitChoice,
   handleNextScenario,
 }: GameQuestionProps) => {
-  const selectedChoice =
-    selectedChoiceIndex !== null
-      ? currentScenario.choices[selectedChoiceIndex]
-      : null;
+
+  // Check if currentScenario is defined
+  if (!currentScenario) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <p className="text-gray-400 text-lg">Đang tải tình huống...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -34,7 +39,7 @@ const GameQuestion = ({
         <h3 className="text-xl font-bold text-yellow-400 mb-4">
           Tình huống:
         </h3>
-        <p className="text-gray-200 text-lg">{currentScenario.situation}</p>
+        <p className="text-gray-200 text-lg">{currentScenario.description}</p>
       </div>
 
       {/* Choices */}
@@ -88,7 +93,7 @@ const GameQuestion = ({
                 </div>
                 <p className="text-sm text-gray-300 mt-2">
                   <span className="font-bold text-yellow-300">Giải thích:</span>{" "}
-                  {choice.explanation}
+                  {(choice as any).explanation ?? ""}
                 </p>
               </div>
             )}

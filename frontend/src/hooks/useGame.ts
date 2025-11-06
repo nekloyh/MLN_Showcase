@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Scenario, getRandomScenarios } from "../../public/data/situations";
+import { Scenario, getRandomScenarios } from "../data/situations";
 import { LeaderboardSubmission, submitToLeaderboard } from "../services/leaderboardService";
 
 // --- 1. INTERFACE & TYPES ---

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import TimelineEventDetail from "../components/TimelineEventDetail";
 import Modal from "../components/ui/modal";
-import timelineEvents from "../../../public/data/timeline-events.json";
+import timelineEvents from "../data/timeline-events.json";
 import { TimelineEvent } from "../types/timeline";
 
 export default function TimelinePage() {
