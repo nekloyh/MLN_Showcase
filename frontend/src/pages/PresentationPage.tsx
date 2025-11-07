@@ -164,7 +164,7 @@ const PresentationPage: React.FC = () => {
           {/* Quote */}
           <div className="max-w-4xl mx-auto bg-gradient-to-r from-marx-red-light to-lenin-yellow-light p-8 rounded-2xl border border-marx-red-light shadow-lg">
             <p className="text-xl md:text-2xl font-medium text-marx-red italic text-center">
-              "{inspirationalQuotes[currentQuoteIndex]}"
+              "{inspirationalQuotes[currentQuoteIndex].split(" - ")[0]}"
             </p>
             <p className="text-right text-sm text-lenin-yellow-dark mt-4 font-medium">
               —{" "}
