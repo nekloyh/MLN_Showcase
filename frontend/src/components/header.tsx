@@ -64,8 +64,8 @@ export const HeroHeader = () => {
               <Link to="/" aria-label="home" className="flex items-center group">
                 <Logo className="mr-3 w-10 h-10 text-marx-red group-hover:text-marx-red-hover transition-colors" />
                 <div className="hidden sm:block">
-                  <div className="font-bold text-lg text-gray-900">Mác - Lênin Dễ Hiểu</div>
-                  <div className="text-xs font-medium text-lenin-yellow">Học Mác vui như học meme</div>
+                  <div className="font-bold text-lg text-gray-900">Marx Me If You Can </div>
+                  <div className="text-xs font-medium text-lenin-yellow">Học Mác vui như coi meme</div>
                 </div>
               </Link>
             </div>
