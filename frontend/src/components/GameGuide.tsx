@@ -7,7 +7,7 @@ export default function GameGuide() {
     <>
       <main
         className="min-h-screen pt-20 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/BackgroundGame.png')" }}
+        style={{ backgroundImage: "url('/game/BackgroundGame.png')" }}
       >
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-5xl mx-auto">

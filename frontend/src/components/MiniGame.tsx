@@ -90,7 +90,7 @@ const getStatImagePath = (
 ): string => {
   const prefix = getStatPrefix(statKey);
   const level = getStatImageLevel(score);
-  return `/images/${prefix}_${level}.png`;
+  return `/game/${prefix}_${level}.png`;
 };
 
 // Helper function to get the stat display name
@@ -783,7 +783,7 @@ function DecisionGame() {
   return (
     <div
   className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat"
-  style={{ backgroundImage: "url('/images/BackgroundGame.png')" }}
+  style={{ backgroundImage: "url('/game/BackgroundGame.png')" }}
 >
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden min-h-[600px] mt-20">
         {showIntro ? (
