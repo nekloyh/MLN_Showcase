@@ -1,5 +1,4 @@
 import {
-  AlertCircle,
   ArrowRight,
   CheckCircle,
   Globe,
@@ -49,10 +48,10 @@ interface GameState {
 const MAX_STAT = 100; // Resetting MAX_STAT to 100 as per the initial refactoring, assuming the user wants a wider range.
 const MIN_STAT = 0;
 const INITIAL_STATS: PlayerStats = {
-  CT: 50,
-  KT: 50,
-  CB: 50,
-  NG: 50,
+  CT: 65,
+  KT: 65,
+  CB: 65,
+  NG: 65,
 };
 const TOTAL_ROUNDS = 16;
 
@@ -244,15 +243,55 @@ function DecisionGame() {
     setGameState((prev) => ({ ...prev, selectedChoiceIndex: index }));
   };
 
+  // ========================================
+  // MULTIPLIER dựa vào trạng thái hiện tại
+  // ========================================
+  const getImpactMultiplier = (currentScore: number, impact: number): number => {
+    // Nguy hiểm cực độ (< 15)
+    if (currentScore < 15) {
+      // Nếu impact tiêu cực → nhân 2.0 (khủng hoảng sâu)
+      // Nếu impact tích cực → nhân 1.5 (khó cải thiện khi đang suy sụp)
+      return impact < 0 ? 2.0 : 1.5;
+    }
+    
+    // Khủng hoảng (< 30)
+    if (currentScore < 30) {
+      // Impact tiêu cực → nhân 1.5 (tình hình xấu thêm)
+      // Impact tích cực → nhân 1.2 (khó cải thiện)
+      return impact < 0 ? 1.5 : 1.2;
+    }
+    
+    // Bình thường (30-80)
+    if (currentScore >= 30 && currentScore <= 80) {
+      return 1.0;  // Không thay đổi
+    }
+    
+    // Phát triển tốt (> 80)
+    if (currentScore > 80) {
+      // Impact tích cực → nhân 1.3 (phát huy thế mạnh)
+      // Impact tiêu cực → nhân 0.8 (đệm chống sốc tốt)
+      return impact > 0 ? 1.3 : 0.8;
+    }
+    
+    return 1.0;
+  };
+
   const handleSubmitChoice = () => {
     if (selectedChoiceIndex === null) return;
 
     const choice = scenarios[currentScenarioIndex].choices[selectedChoiceIndex];
+    
+    // Apply multiplier cho từng chỉ số dựa vào trạng thái hiện tại
+    const ctMultiplier = getImpactMultiplier(stats.CT, choice.impact.CT);
+    const ktMultiplier = getImpactMultiplier(stats.KT, choice.impact.KT);
+    const cbMultiplier = getImpactMultiplier(stats.CB, choice.impact.CB);
+    const ngMultiplier = getImpactMultiplier(stats.NG, choice.impact.NG);
+    
     const newStats = {
-      CT: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.CT + choice.impact.CT)),
-      KT: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.KT + choice.impact.KT)),
-      CB: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.CB + choice.impact.CB)),
-      NG: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.NG + choice.impact.NG)),
+      CT: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.CT + Math.round(choice.impact.CT * ctMultiplier))),
+      KT: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.KT + Math.round(choice.impact.KT * ktMultiplier))),
+      CB: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.CB + Math.round(choice.impact.CB * cbMultiplier))),
+      NG: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.NG + Math.round(choice.impact.NG * ngMultiplier))),
     };
 
     setGameState((prev) => ({
@@ -397,32 +436,45 @@ function DecisionGame() {
   };
 
   const renderImpact = (impact: PlayerStats) => (
-    <div className="grid grid-cols-2 gap-2 mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-      {Object.entries(impact).map(([key, value]) => (
-        <div
-          key={key}
-          className={`flex items-center justify-between p-1 rounded-md ${
-            value > 0
-              ? "bg-green-100"
-              : value < 0
-              ? "bg-red-100"
-              : "bg-gray-100"
-          }`}
-        >
-          <span className="font-semibold text-sm">{key}</span>
-          <span
-            className={`font-bold text-sm ${
-              value > 0
-                ? "text-green-600"
-                : value < 0
-                ? "text-red-600"
-                : "text-gray-600"
-            }`}
+    <div className="mt-4 bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-4 shadow-inner border border-gray-200">
+      <div className="grid grid-cols-2 gap-3">
+        {Object.entries(impact).map(([key, value]) => (
+          <div
+            key={key}
+            className={`group flex items-center justify-between p-3 rounded-lg transition-all duration-200 hover:shadow-md hover:scale-105 cursor-default
+              ${
+                value > 0
+                  ? "bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200"
+                  : value < 0
+                  ? "bg-gradient-to-r from-red-50 to-rose-50 border border-red-200"
+                  : "bg-white border border-gray-200"
+              }
+            `}
           >
-            {value > 0 ? `+${value}` : value}
-          </span>
-        </div>
-      ))}
+            <div className="flex items-center gap-2">
+              <span className={`w-8 h-8 flex items-center justify-center rounded-full text-xs font-bold
+                ${value > 0 ? "bg-green-200 text-green-800" : value < 0 ? "bg-red-200 text-red-800" : "bg-gray-200 text-gray-600"}
+              `}>
+                {getStatDisplayName(key as keyof PlayerStats).charAt(0)}
+              </span>
+              <span className="font-semibold text-sm text-gray-700">
+                {getStatDisplayName(key as keyof PlayerStats)}
+              </span>
+            </div>
+            <span
+              className={`font-bold text-lg ${
+                value > 0
+                  ? "text-green-600"
+                  : value < 0
+                  ? "text-red-600"
+                  : "text-gray-500"
+              }`}
+            >
+              {value > 0 ? `+${value}` : value}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 
@@ -543,16 +595,28 @@ function DecisionGame() {
     return (
       <div className="flex flex-col h-full">
         {/* Header - Progress & Stats */}
-        <div className="p-4 bg-gray-50 border-b border-gray-200 rounded-t-xl">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-xl font-bold text-gray-800">
-              Năm {currentYear} - Quý {currentQuarter}
-            </h3>
-            <div className="text-lg font-semibold text-blue-600">
-              Vòng {currentRound} / {TOTAL_ROUNDS}
+        <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-b-2 border-blue-200 rounded-t-xl shadow-sm">
+          {/* Progress Bar */}
+          <div className="mb-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-2xl font-bold text-gray-800">
+                Năm {currentYear} - Quý {currentQuarter}
+              </h3>
+              <div className="text-base font-semibold text-blue-700 bg-white px-4 py-1.5 rounded-full shadow-sm">
+                Vòng {currentRound} / {TOTAL_ROUNDS}
+              </div>
+            </div>
+            {/* Linear Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+              <div 
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 h-3 rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${(currentRound / TOTAL_ROUNDS) * 100}%` }}
+              />
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-2">
+          
+          {/* Stats Cards with hover effect */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {renderStatImage("CT", stats.CT)}
             {renderStatImage("KT", stats.KT)}
             {renderStatImage("CB", stats.CB)}
@@ -562,87 +626,150 @@ function DecisionGame() {
 
         {/* Scenario Content */}
         <div className="p-6 flex-grow overflow-y-auto">
-          <div className="flex items-center mb-4">
-            {getIcon(currentScenario.category)}
-            <div className="ml-4">
-              <p className="text-sm font-semibold text-gray-500">
-                {currentScenario.category} - Tình huống {currentScenario.id}
-              </p>
-              <h1 className="text-2xl font-extrabold text-gray-900">
-                {currentScenario.title}
-              </h1>
+          {/* Category Badge & Title */}
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-3 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl shadow-md">
+                {getIcon(currentScenario.category)}
+              </div>
+              <div>
+                <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100 rounded-full mb-2">
+                  {currentScenario.category} • Tình huống {currentScenario.id}
+                </span>
+                <h1 className="text-3xl font-extrabold text-gray-900 leading-tight">
+                  {currentScenario.title}
+                </h1>
+              </div>
             </div>
           </div>
-          <p className="text-lg text-gray-700 mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg shadow-sm">
-            {currentScenario.description}
-          </p>
+          
+          {/* Description Box */}
+          <div className="mb-8 p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg shadow-md">
+            <p className="text-lg text-gray-800 leading-relaxed">
+              {currentScenario.description}
+            </p>
+          </div>
 
           {/* Choices */}
-          <div className="space-y-3">
+          <div className="space-y-4 mb-6">
             {currentScenario.choices.map((choice, index) => (
               <button
                 key={index}
                 onClick={() => handleChoiceSelect(index)}
                 disabled={showResult}
-                className={`w-full text-left p-4 border-2 rounded-lg transition duration-200
+                className={`w-full text-left p-5 border-2 rounded-xl transition-all duration-200 transform
                   ${
                     selectedChoiceIndex === index
-                      ? "border-blue-500 bg-blue-50 shadow-md"
-                      : "border-gray-200 hover:border-blue-300 hover:bg-gray-50"
+                      ? "border-blue-500 bg-gradient-to-r from-blue-50 to-indigo-50 shadow-lg scale-[1.02] ring-2 ring-blue-200"
+                      : "border-gray-300 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md hover:scale-[1.01]"
                   }
                   ${
                     showResult && selectedChoiceIndex !== index
-                      ? "opacity-50 cursor-not-allowed"
+                      ? "opacity-40 cursor-not-allowed"
                       : ""
                   }
+                  ${!showResult ? "cursor-pointer" : ""}
                 `}
               >
-                <span className="font-semibold text-gray-800">
-                  Lựa chọn {String.fromCharCode(65 + index)}:
-                </span>{" "}
-                {choice.text}
+                <div className="flex items-start gap-3">
+                  <span className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm
+                    ${selectedChoiceIndex === index 
+                      ? "bg-blue-500 text-white" 
+                      : "bg-gray-200 text-gray-700"
+                    }`}
+                  >
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span className="text-gray-800 leading-relaxed font-medium flex-1">
+                    {choice.text}
+                  </span>
+                  {selectedChoiceIndex === index && (
+                    <CheckCircle className="flex-shrink-0 w-6 h-6 text-blue-500" />
+                  )}
+                </div>
               </button>
             ))}
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-6 flex justify-end space-x-4">
+          <div className="mt-6 flex justify-end">
             {!showResult && (
               <button
                 onClick={handleSubmitChoice}
                 disabled={selectedChoiceIndex === null}
-                className={`flex items-center px-6 py-3 text-lg font-semibold text-white rounded-lg transition duration-300 shadow-md
+                className={`group flex items-center gap-3 px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 shadow-lg
                   ${
                     selectedChoiceIndex !== null
-                      ? "bg-green-600 hover:bg-green-700"
-                      : "bg-gray-400 cursor-not-allowed"
+                      ? "bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white hover:shadow-xl hover:scale-105 active:scale-95"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
                   }
                 `}
               >
-                Ra Quyết Định <ArrowRight className="w-5 h-5 ml-2" />
+                <Send className="w-6 h-6" />
+                Ra Quyết Định 
+                <ArrowRight className={`w-6 h-6 transition-transform ${selectedChoiceIndex !== null ? 'group-hover:translate-x-1' : ''}`} />
+                {selectedChoiceIndex !== null && (
+                  <span className="text-xs font-normal opacity-75">(Enter)</span>
+                )}
               </button>
             )}
           </div>
 
           {/* Result Display */}
           {showResult && result && (
-            <div className="mt-8 p-6 bg-white border-t-4 border-blue-500 rounded-lg shadow-xl">
-              <h3 className="text-xl font-bold text-blue-600 mb-3 flex items-center">
-                <AlertCircle className="w-6 h-6 mr-2" /> Kết Quả Quyết Định
-              </h3>
-              <p className="text-gray-700 mb-4">
-                Bạn đã chọn:{" "}
-                <span className="font-semibold">"{result.text}"</span>
-              </p>
-              <p className="text-lg font-semibold text-gray-800">
-                Ảnh hưởng đến Quốc gia:
-              </p>
+            <div className="mt-6 p-6 bg-gradient-to-br from-white to-blue-50 border-2 border-blue-400 rounded-2xl shadow-2xl">
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b-2 border-blue-200">
+                <div className="p-2 bg-blue-500 rounded-lg">
+                  <CheckCircle className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Kết Quả Quyết Định
+                </h3>
+              </div>
+              
+              <div className="mb-5 p-4 bg-white rounded-xl border border-blue-200 shadow-sm">
+                <p className="text-gray-600 text-sm mb-1">Bạn đã chọn:</p>
+                <p className="text-gray-900 font-bold text-lg">"{result.text}"</p>
+              </div>
+              
+              {/* Explanation Section */}
+              {result.explanation && (
+                <div className="mb-4 p-5 bg-gradient-to-r from-blue-50 to-cyan-50 border-l-4 border-blue-500 rounded-lg shadow-sm">
+                  <p className="text-base font-bold text-blue-900 mb-2 flex items-center gap-2">
+                    <span className="text-xl">💡</span> Giải thích:
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    {result.explanation}
+                  </p>
+                </div>
+              )}
+              
+              {/* Historical Example Section */}
+              {(result as any).historicalExample && (
+                <div className="mb-4 p-5 bg-gradient-to-r from-amber-50 to-yellow-50 border-l-4 border-amber-500 rounded-lg shadow-sm">
+                  <p className="text-base font-bold text-amber-900 mb-2 flex items-center gap-2">
+                    <span className="text-xl">📚</span> Ví dụ lịch sử:
+                  </p>
+                  <p className="text-gray-700 leading-relaxed italic">
+                    {(result as any).historicalExample}
+                  </p>
+                </div>
+              )}
+              
+              <div className="mb-3">
+                <p className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                  <Trophy className="w-6 h-6 text-yellow-500" />
+                  Ảnh hưởng đến Quốc gia:
+                </p>
+              </div>
               {renderImpact(result.impact)}
+              
               <button
                 onClick={handleNextScenario}
-                className="mt-6 flex items-center ml-auto px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg"
+                className="group mt-8 flex items-center gap-3 ml-auto px-8 py-4 text-xl font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95"
               >
-                Tiếp Tục <ArrowRight className="w-5 h-5 ml-2" />
+                Tiếp Tục 
+                <ArrowRight className="w-7 h-7 group-hover:translate-x-2 transition-transform" />
               </button>
             </div>
           )}

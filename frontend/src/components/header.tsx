@@ -31,9 +31,9 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, className, onClick, .
 
 // Menu items – CẬP NHẬT: "Bảo Tàng Meme" + "Bảng xếp hạng"
 const menuItems = [
-  { name: 'Trò chơi Mô phỏng', href: '/' },
-  { name: 'Dòng Thời Gian', href: '/timeline' },
   { name: 'Nội Dung Chi Tiết', href: '/presentations' },
+  { name: 'Dòng Thời Gian', href: '/timeline' },
+  { name: 'Trò chơi Mô phỏng', href: '/' },
   { name: 'Bảo Tàng Meme', href: '/gallery' }, // Đổi tên + link
   { name: 'Công Bố AI', href: '/ai-disclosure' },
 ];

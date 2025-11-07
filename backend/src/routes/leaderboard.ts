@@ -2,7 +2,7 @@ import express from "express";
 import {
   submitScore,
   getLeaderboard,
-} from "../controllers/leaderboardController.js";
+} from "../controllers/leaderboardController";
 
 const router = express.Router();
 

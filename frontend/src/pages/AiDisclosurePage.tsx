@@ -11,7 +11,7 @@ export default function AiDisclosurePage() {
         <div className="container mx-auto px-4 py-12">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Công Bố Về Hợp Tác Cùng AI
+              Công bố về hợp tác cùng AI
               <span className="block text-marx-red">Minh Bạch & Sáng Tạo</span>
             </h1>
             <p className="text-gray-700 text-lg max-w-2xl mx-auto">
@@ -58,7 +58,7 @@ export default function AiDisclosurePage() {
                     <li className="flex items-start">
                       <span className="inline-block w-2 h-2 bg-lenin-yellow rounded-full mt-2 mr-3 flex-shrink-0" />
                       <div>
-                        <strong className="text-gray-900">Công cụ sử dụng:</strong> Chủ yếu là <code className="bg-gray-100 px-2 py-1 rounded text-sm">Gemini</code> để tạo hình ảnh.
+                        <strong className="text-gray-900">Công cụ sử dụng:</strong> Chủ yếu là Gemini để tạo hình ảnh.
                       </div>
                     </li>
                     <li className="flex items-start">

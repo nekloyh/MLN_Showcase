@@ -38,7 +38,7 @@ export default function GameGuide() {
                     Mỗi quý, bạn đối mặt với một tình huống thực tế về <strong>chính trị, kinh tế, xã hội hoặc ngoại giao</strong>.
                   </p>
                   <p className="text-lg text-gray-800 mt-4 font-semibold">
-                    Nhiệm vụ: Giữ tất cả chỉ số <span className="text-green-600">trên 0</span> và đạt <span className="text-marx-red">điểm trung bình cao nhất</span>!
+                    Nhiệm vụ: Giữ tất cả chỉ số <span className="text-marx-red">trên 0</span> và đạt <span className="text-green-600">điểm trung bình cao nhất</span>!
                   </p>
                 </div>
               </section>

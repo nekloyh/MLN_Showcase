@@ -4,8 +4,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-// Giả sử file routes của bạn nằm ở đây
-import leaderboardRoutes from "./routes/leaderboard.js";
+import leaderboardRoutes from "./routes/leaderboard";
 
 dotenv.config();
 

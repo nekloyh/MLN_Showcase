@@ -11,14 +11,14 @@ export default function GameIntro({ onStart }: GameIntroProps) {
     <div className="text-center p-8 bg-white rounded-xl shadow-2xl">
       {/* Tiêu đề */}
       <h2 className="text-3xl font-extrabold mb-6 text-blue-600">
-        Hướng dẫn chơi
+        Hướng Dẫn Chơi
       </h2>
 
       {/* Nội dung chính */}
       <div className="text-left mb-8 space-y-4">
         <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
           <p className="text-lg text-gray-800 font-semibold mb-2">
-            Về trò chơi
+            Về Trò Chơi
           </p>
           <p className="text-gray-700">
             Bạn sẽ trả lời các câu hỏi về quản lý quốc gia và đưa ra quyết định
