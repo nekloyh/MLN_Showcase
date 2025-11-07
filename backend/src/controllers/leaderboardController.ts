@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Leaderboard from "../models/Leaderboard";
+import Leaderboard from "../models/Leaderboard.js";
 
 export const submitScore = async (req: Request, res: Response) => {
   try {

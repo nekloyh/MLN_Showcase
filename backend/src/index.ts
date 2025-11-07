@@ -4,7 +4,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import leaderboardRoutes from "./routes/leaderboard";
+import leaderboardRoutes from "./routes/leaderboard.js";
 
 dotenv.config();
 
