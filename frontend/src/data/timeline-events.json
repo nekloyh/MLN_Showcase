@@ -4,7 +4,7 @@
     "year": "1776",
     "title": "Adam Smith - Cha Đẻ Kinh Tế Học",
     "description": "Xuất bản 'Của Cải Các Quốc Gia' - nền tảng kinh tế học cổ điển và lý thuyết giá trị lao động.",
-    "image": "/assets/images/aicap.jpg",
+    "image": "/public/images/timeline/Adam_Smith.jpg",
     "detailContent": {
       "context": "Adam Smith (1723-1790), triết gia Scotland, xuất bản tác phẩm 'An Inquiry into the Nature and Causes of the Wealth of Nations'. Đây là tác phẩm tiên phong về kinh tế học cổ điển.",
       "significance": "Smith đưa ra THUYẾT GIÁ TRỊ LAO ĐỘNG sơ khai: Giá trị hàng hóa được quyết định bởi lao động. Ông cũng phát triển khái niệm 'bàn tay vô hình' (invisible hand) - thị trường tự điều tiết qua cạnh tranh.",
@@ -23,7 +23,7 @@
     "year": "1817",
     "title": "David Ricardo - Hoàn thiện Giá Trị Lao Động",
     "description": "Ricardo phát triển lý thuyết giá trị lao động và đưa ra thuyết địa tô vi sai.",
-    "image": "/assets/images/viet-mien-lao.jpg",
+    "image": "/public/images/timeline/David_Ricardo.jpg",
     "detailContent": {
       "context": "David Ricardo (1772-1823), nhà kinh tế học người Anh, xuất bản 'Principles of Political Economy and Taxation' (Nguyên lý Kinh tế Chính trị và Đánh thuế).",
       "significance": "Ricardo HOÀN THIỆN lý thuyết giá trị lao động của Smith: Giá trị hàng hóa được quyết định bởi LƯỢNG LAO ĐỘNG XÃ HỘI CẦN THIẾT. Ông cũng phát triển thuyết ĐỊA TÔ VI SAI - giải thích nguồn gốc thu nhập của địa chủ.",
@@ -42,7 +42,7 @@
     "year": "1848",
     "title": "Karl Marx & Engels - Tuyên Ngôn Cộng Sản",
     "description": "Xuất bản 'Tuyên Ngôn Đảng Cộng Sản' - khai sinh chủ nghĩa xã hội khoa học.",
-    "image": "/assets/images/Poland.jpg",
+    "image": "/public/images/timeline/TimeLine_3.jpg",
     "detailContent": {
       "context": "Karl Marx (1818-1883) và Friedrich Engels (1820-1895) xuất bản 'Tuyên ngôn của Đảng Cộng sản' vào năm 1848, trong bối cảnh các cuộc cách mạng tư sản cuồn cuộn châu Âu.",
       "significance": "Đây là tác phẩm KHAI SINH CHỦ NGHĨA XÃ HỘI KHOA HỌC. Vạch rõ mâu thuẫn giai cấp giữa tư sản và vô sản, dự báo sự sụp đổ tất yếu của CNTB và thắng lợi của XHCN. Khẩu hiệu nổi tiếng: 'Vô sản toàn thế giới, đoàn kết lại!'",
@@ -61,7 +61,7 @@
     "year": "1867",
     "title": "Tư Bản - Kinh thánh của Kinh Tế Chính Trị",
     "description": "Xuất bản Tập I 'Tư Bản' (Das Kapital) - tác phẩm vĩ đại của Marx về kinh tế chính trị.",
-    "image": "/assets/images/20121960.jpg",
+    "image": "/public/images/timeline/TimeLine_4.jpg",
     "detailContent": {
       "context": "Sau gần 20 năm nghiên cứu tại Thư viện Bảo tàng Anh (British Museum), Marx hoàn thành và xuất bản Tập I của 'Tư Bản' năm 1867. Đây là tác phẩm chính trị kinh tế vĩ đại nhất thế kỷ 19.",
       "significance": "Marx VẠCH TRẦN bí mật của lợi nhuận tư bản: GIÁ TRỊ THẶNG DƯ - lao động không công của công nhân. Ông phân tích toàn diện quá trình sản xuất tư bản chủ nghĩa, các quy luật vận động và mâu thuẫn cơ bản của CNTB.",
@@ -81,7 +81,7 @@
     "year": "1885-1894",
     "title": "Engels hoàn thiện 'Tư Bản'",
     "description": "Engels biên tập và xuất bản Tập II (1885) và Tập III (1894) của 'Tư Bản' từ bản thảo Marx.",
-    "image": "/assets/images/aicap.jpg",
+    "image": "/public/images/timeline/TimeLine_5.jpg",
     "detailContent": {
       "context": "Sau khi Marx mất (1883), Friedrich Engels dành 11 năm để chỉnh lý và xuất bản 2 tập còn lại của 'Tư Bản' từ các bản thảo chưa hoàn chỉnh của Marx.",
       "significance": "Tập II phân tích QUÁ TRÌNH LƯU THÔNG tư bản (T-H...SX...H'-T'), tái sản xuất xã hội. Tập III phân tích QUÁ TRÌNH TOÀN BỘ sản xuất tư bản chủ nghĩa: biến đổi giá trị thặng dư thành lợi nhuận, lợi tức, địa tô; quy luật tỷ suất lợi suất giảm dần.",
@@ -100,7 +100,7 @@
     "year": "1916",
     "title": "Lenin - Chủ Nghĩa Đế Quốc",
     "description": "Lenin xuất bản 'Chủ nghĩa đế quốc, giai đoạn cao nhất của chủ nghĩa tư bản'.",
-    "image": "/assets/images/viet-mien-lao.jpg",
+    "image": "/public/images/timeline/TimeLine6.jpg",
     "detailContent": {
       "context": "Vladimir Lenin (1870-1924) nghiên cứu sự phát triển của CNTB từ tự do cạnh tranh sang ĐỘC QUYỀN. Ông xuất bản tác phẩm này năm 1916, giữa Thế chiến I.",
       "significance": "Lenin chỉ ra CHỦNGHĨA ĐẾ QUỐC là giai đoạn cao nhất và cuối cùng của CNTB, có 5 đặc điểm cơ bản: độc quyền, tư bản tài chính, xuất khẩu tư bản, chia chác thế giới, chiến tranh đế quốc. Đây là sự phát triển sáng tạo của chủ nghĩa Mác trong điều kiện mới.",
@@ -119,7 +119,7 @@
     "year": "1917",
     "title": "Cách Mạng Tháng Mười Nga - Lần Đầu Áp Dụng",
     "description": "Cách mạng Xã hội chủ nghĩa Nga thành công, xây dựng nhà nước xã hội chủ nghĩa đầu tiên.",
-    "image": "/assets/images/Poland.jpg",
+    "image": "/public/images/timeline/TimeLine7.jpeg",
     "detailContent": {
       "context": "Dưới sự lãnh đạo của Đảng Bônsêvích và Lenin, Cách mạng Tháng Mười Nga (7/11/1917) lật đổ chính quyền tư sản lâm thời, thiết lập chính quyền công nông (Xô-viết).",
       "significance": "Đây là LẦN ĐẦU TIÊN trong lịch sử, lý luận Mác về XHCN được biến thành HIỆN THỰC. Nước Nga Xô-viết trở thành căn cứ cách mạng thế giới, truyền cảm hứng cho phong trào công nhân và dân tộc bị áp bức toàn cầu.",
@@ -138,7 +138,7 @@
     "year": "1930-1960",
     "title": "Kinh Tế Chính Trị XHCN - Liên Xô và Trung Quốc",
     "description": "Phát triển lý luận kinh tế chính trị xã hội chủ nghĩa trong quá trình xây dựng CNXH.",
-    "image": "/assets/images/20121960.jpg",
+    "image": "/public/images/timeline/TimeLine8.jpg",
     "detailContent": {
       "context": "Liên Xô (1922-1991) và Trung Quốc (từ 1949) xây dựng chế độ XHCN, tạo ra hệ thống lý luận Kinh tế chính trị XHCN. Các nhà lý luận Xô-viết và Trung Quốc phát triển lý thuyết về kinh tế kế hoạch hóa, chế độ công hữu, phân phối theo lao động.",
       "significance": "Kinh tế chính trị XHCN nghiên cứu các QUY LUẬT KINH TẾ của chế độ XHCN: quy luật ưu tiên phát triển sản xuất tư liệu, quy luật phân phối theo lao động, quy luật kế hoạch hóa. Đây là sự mở rộng của Kinh tế chính trị Mác-Lênin sang lĩnh vực mới.",
@@ -161,7 +161,7 @@
     "year": "1986-Nay",
     "title": "Kinh Tế Thị Trường Định Hướng XHCN",
     "description": "Việt Nam và Trung Quốc phát triển mô hình kinh tế thị trường định hướng xã hội chủ nghĩa.",
-    "image": "/assets/images/aicap.jpg",
+    "image": "/public/images/timeline/TimeLine9.jpg",
     "detailContent": {
       "context": "Sau Đổi Mới 1986 (Việt Nam) và Cải Cách Mở Cửa 1978 (Trung Quốc), các nước XHCN chuyển từ kinh tế kế hoạch hóa tập trung sang KINH TẾ THỊ TRƯỜNG ĐỊNH HƯỚNG XÃ HỘI CHỦ NGHĨA.",
       "significance": "Đây là sự PHÁT TRIỂN SÁNG TẠO của chủ nghĩa Mác-Lênin: Kết hợp cơ chế thị trường (điều tiết vi mô) với định hướng XHCN (công hữu làm chủ, nhà nước điều tiết vĩ mô, công bằng xã hội). Trung Quốc trở thành nền kinh tế lớn thứ 2 thế giới.",
@@ -180,7 +180,7 @@
     "year": "Hiện Đại",
     "title": "Kinh Tế Chính Trị Trong Thế Kỷ 21",
     "description": "Ứng dụng Kinh tế chính trị Mác-Lênin để phân tích tư bản chủ nghĩa hiện đại và xu hướng toàn cầu.",
-    "image": "/assets/images/viet-mien-lao.jpg",
+    "image": "/public/images/timeline/TimeLine10.jpg",
     "detailContent": {
       "context": "Thế kỷ 21: Toàn cầu hóa, cách mạng công nghiệp 4.0, khủng hoảng tài chính 2008, đại dịch COVID-19, biến đổi khí hậu. Các mâu thuẫn của CNTB ngày càng sâu sắc: bất bình đẳng tăng, khủng hoảng môi trường, khủng hoảng kinh tế chu kỳ.",
       "significance": "Kinh tế chính trị Mác-Lênin VẪN CÒN NGUYÊN GIÁ TRỊ để phân tích: (1) Bóc lột lao động trong kinh tế số (gig economy), (2) Độc quyền của các tập đoàn công nghệ (Big Tech), (3) Khủng hoảng thừa thãi và thất nghiệp công nghệ, (4) Mâu thuẫn giữa phát triển và môi trường.",
