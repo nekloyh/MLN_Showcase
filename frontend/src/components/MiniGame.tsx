@@ -11,7 +11,10 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Scenario, getRandomScenarios } from "../content/situations.ts";
-import { LeaderboardSubmission, submitToLeaderboard } from "../services/leaderboardService";
+import {
+  LeaderboardSubmission,
+  submitToLeaderboard,
+} from "../services/leaderboardService";
 import GameIntro from "./GameIntro";
 import LeaderboardModal from "./LeaderboardModal";
 
@@ -38,7 +41,7 @@ interface GameState {
   gameStartTime: number;
   gameEndTime: number | null;
   leaderboardSubmitted: boolean;
-  leaderboardStatus: 'idle' | 'sending' | 'success' | 'error';
+  leaderboardStatus: "idle" | "sending" | "success" | "error";
   showIntro: boolean;
   showLeaderboardModal: boolean;
 }
@@ -135,10 +138,10 @@ const getStatColor = (value: number) => {
 const getPerformanceLevel = (stats: PlayerStats) => {
   const totalScore = stats.CT + stats.KT + stats.CB + stats.NG;
   const avg = totalScore / 4;
-  
+
   // Tổng điểm tối đa: 400 (4 chỉ số x 100)
   // Điểm trung bình mỗi chỉ số: 0-100
-  
+
   if (avg >= 80)
     return {
       title: "Thiên Tài Lãnh Đạo",
@@ -188,7 +191,7 @@ function DecisionGame() {
     gameStartTime: 0,
     gameEndTime: null,
     leaderboardSubmitted: false,
-    leaderboardStatus: 'idle',
+    leaderboardStatus: "idle",
     showIntro: true,
     showLeaderboardModal: false,
   });
@@ -226,7 +229,7 @@ function DecisionGame() {
       gameStartTime: Date.now(),
       gameEndTime: null,
       leaderboardSubmitted: false,
-      leaderboardStatus: 'idle',
+      leaderboardStatus: "idle",
       showIntro: false,
       showLeaderboardModal: false,
     });
@@ -246,33 +249,36 @@ function DecisionGame() {
   // ========================================
   // MULTIPLIER dựa vào trạng thái hiện tại
   // ========================================
-  const getImpactMultiplier = (currentScore: number, impact: number): number => {
+  const getImpactMultiplier = (
+    currentScore: number,
+    impact: number
+  ): number => {
     // Nguy hiểm cực độ (< 15)
     if (currentScore < 15) {
       // Nếu impact tiêu cực → nhân 2.0 (khủng hoảng sâu)
       // Nếu impact tích cực → nhân 1.5 (khó cải thiện khi đang suy sụp)
       return impact < 0 ? 2.0 : 1.5;
     }
-    
+
     // Khủng hoảng (< 30)
     if (currentScore < 30) {
       // Impact tiêu cực → nhân 1.5 (tình hình xấu thêm)
       // Impact tích cực → nhân 1.2 (khó cải thiện)
       return impact < 0 ? 1.5 : 1.2;
     }
-    
+
     // Bình thường (30-80)
     if (currentScore >= 30 && currentScore <= 80) {
-      return 1.0;  // Không thay đổi
+      return 1.0; // Không thay đổi
     }
-    
+
     // Phát triển tốt (> 80)
     if (currentScore > 80) {
       // Impact tích cực → nhân 1.3 (phát huy thế mạnh)
       // Impact tiêu cực → nhân 0.8 (đệm chống sốc tốt)
       return impact > 0 ? 1.3 : 0.8;
     }
-    
+
     return 1.0;
   };
 
@@ -280,18 +286,42 @@ function DecisionGame() {
     if (selectedChoiceIndex === null) return;
 
     const choice = scenarios[currentScenarioIndex].choices[selectedChoiceIndex];
-    
+
     // Apply multiplier cho từng chỉ số dựa vào trạng thái hiện tại
     const ctMultiplier = getImpactMultiplier(stats.CT, choice.impact.CT);
     const ktMultiplier = getImpactMultiplier(stats.KT, choice.impact.KT);
     const cbMultiplier = getImpactMultiplier(stats.CB, choice.impact.CB);
     const ngMultiplier = getImpactMultiplier(stats.NG, choice.impact.NG);
-    
+
     const newStats = {
-      CT: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.CT + Math.round(choice.impact.CT * ctMultiplier))),
-      KT: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.KT + Math.round(choice.impact.KT * ktMultiplier))),
-      CB: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.CB + Math.round(choice.impact.CB * cbMultiplier))),
-      NG: Math.max(MIN_STAT, Math.min(MAX_STAT, stats.NG + Math.round(choice.impact.NG * ngMultiplier))),
+      CT: Math.max(
+        MIN_STAT,
+        Math.min(
+          MAX_STAT,
+          stats.CT + Math.round(choice.impact.CT * ctMultiplier)
+        )
+      ),
+      KT: Math.max(
+        MIN_STAT,
+        Math.min(
+          MAX_STAT,
+          stats.KT + Math.round(choice.impact.KT * ktMultiplier)
+        )
+      ),
+      CB: Math.max(
+        MIN_STAT,
+        Math.min(
+          MAX_STAT,
+          stats.CB + Math.round(choice.impact.CB * cbMultiplier)
+        )
+      ),
+      NG: Math.max(
+        MIN_STAT,
+        Math.min(
+          MAX_STAT,
+          stats.NG + Math.round(choice.impact.NG * ngMultiplier)
+        )
+      ),
     };
 
     setGameState((prev) => ({
@@ -312,19 +342,19 @@ function DecisionGame() {
       stats.CB <= MIN_STAT ||
       stats.NG <= MIN_STAT
     ) {
-      setGameState((prev) => ({ 
-        ...prev, 
+      setGameState((prev) => ({
+        ...prev,
         gameFinished: true,
-        gameEndTime: Date.now() 
+        gameEndTime: Date.now(),
       }));
       return;
     }
 
     if (nextRound > TOTAL_ROUNDS) {
-      setGameState((prev) => ({ 
-        ...prev, 
+      setGameState((prev) => ({
+        ...prev,
         gameFinished: true,
-        gameEndTime: Date.now() 
+        gameEndTime: Date.now(),
       }));
     } else {
       setGameState((prev) => ({
@@ -362,34 +392,37 @@ function DecisionGame() {
 
     setGameState((prev) => ({
       ...prev,
-      leaderboardStatus: 'sending',
+      leaderboardStatus: "sending",
     }));
 
     try {
       const response = await submitToLeaderboard(submissionData);
-      
+
       if (response.success) {
         setGameState((prev) => ({
           ...prev,
           leaderboardSubmitted: true,
-          leaderboardStatus: 'success',
+          leaderboardStatus: "success",
         }));
 
-        const rankInfo = response.data 
-          ? `\n\nHạng: ${response.data.rank} / ${response.data.totalPlayers} người chơi` 
-          : '';
+        const rankInfo = response.data
+          ? `\n\nHạng: ${response.data.rank} / ${response.data.totalPlayers} người chơi`
+          : "";
         alert(`Đã gửi thành công!\n${response.message}${rankInfo}`);
       } else {
-        throw new Error(response.message || 'Gửi thất bại');
+        throw new Error(response.message || "Gửi thất bại");
       }
     } catch (error) {
       setGameState((prev) => ({
         ...prev,
-        leaderboardStatus: 'error',
+        leaderboardStatus: "error",
       }));
-      
-      const errorMessage = error instanceof Error ? error.message : 'Lỗi không xác định';
-      alert(`Có lỗi xảy ra khi gửi dữ liệu.\n\nChi tiết: ${errorMessage}\n\nVui lòng thử lại!`);
+
+      const errorMessage =
+        error instanceof Error ? error.message : "Lỗi không xác định";
+      alert(
+        `Có lỗi xảy ra khi gửi dữ liệu.\n\nChi tiết: ${errorMessage}\n\nVui lòng thử lại!`
+      );
     }
   };
 
@@ -421,7 +454,7 @@ function DecisionGame() {
         <div className="text-sm font-bold text-gray-700 mb-1">
           {displayName}
         </div>
-        <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-gray-100 shadow-inner">
+        <div className="w-24 h-24 overflow-hidden border-4 border-gray-100 shadow-inner rounded-lg">
           <img
             src={imagePath}
             alt={`${displayName} Level ${value}`}
@@ -452,9 +485,17 @@ function DecisionGame() {
             `}
           >
             <div className="flex items-center gap-2">
-              <span className={`w-8 h-8 flex items-center justify-center rounded-full text-xs font-bold
-                ${value > 0 ? "bg-green-200 text-green-800" : value < 0 ? "bg-red-200 text-red-800" : "bg-gray-200 text-gray-600"}
-              `}>
+              <span
+                className={`w-8 h-8 flex items-center justify-center rounded-full text-xs font-bold
+                ${
+                  value > 0
+                    ? "bg-green-200 text-green-800"
+                    : value < 0
+                    ? "bg-red-200 text-red-800"
+                    : "bg-gray-200 text-gray-600"
+                }
+              `}
+              >
                 {getStatDisplayName(key as keyof PlayerStats).charAt(0)}
               </span>
               <span className="font-semibold text-sm text-gray-700">
@@ -481,7 +522,7 @@ function DecisionGame() {
   const renderGameScreen = () => {
     if (gameFinished) {
       const totalScore = stats.CT + stats.KT + stats.CB + stats.NG;
-      
+
       return (
         <div className="text-center p-8 bg-white rounded-xl shadow-2xl">
           <Trophy className={`w-20 h-20 mx-auto mb-4 ${performance.color}`} />
@@ -503,8 +544,12 @@ function DecisionGame() {
           {/* Total Score */}
           <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-2 border-blue-200">
             <p className="text-sm text-gray-600 mb-1">Tổng điểm</p>
-            <p className="text-4xl font-extrabold text-blue-600">{totalScore}</p>
-            <p className="text-xs text-gray-500 mt-1">Số vòng hoàn thành: {currentRound - 1}/16</p>
+            <p className="text-4xl font-extrabold text-blue-600">
+              {totalScore}
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              Số vòng hoàn thành: {currentRound - 1}/16
+            </p>
           </div>
 
           {/* Leaderboard Section */}
@@ -514,7 +559,7 @@ function DecisionGame() {
                 <Trophy className="w-5 h-5 mr-2" />
                 Gửi kết quả lên Bảng xếp hạng
               </h3>
-              
+
               {/* Input tên người chơi */}
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -533,15 +578,16 @@ function DecisionGame() {
               {/* Nút gửi */}
               <button
                 onClick={handleSubmitLeaderboard}
-                disabled={leaderboardStatus === 'sending'}
+                disabled={leaderboardStatus === "sending"}
                 className={`w-full flex items-center justify-center px-6 py-3 text-lg font-semibold text-white rounded-lg transition duration-300 shadow-lg
-                  ${leaderboardStatus === 'sending' 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-green-600 hover:bg-green-700'
+                  ${
+                    leaderboardStatus === "sending"
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-700"
                   }
                 `}
               >
-                {leaderboardStatus === 'sending' ? (
+                {leaderboardStatus === "sending" ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                     Đang gửi...
@@ -568,7 +614,12 @@ function DecisionGame() {
                 Kết quả của bạn đã được lưu vào bảng xếp hạng
               </p>
               <button
-                onClick={() => setGameState(prev => ({ ...prev, showLeaderboardModal: true }))}
+                onClick={() =>
+                  setGameState((prev) => ({
+                    ...prev,
+                    showLeaderboardModal: true,
+                  }))
+                }
                 className="mt-4 w-full px-4 py-2 text-base font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
               >
                 Xem Bảng xếp hạng
@@ -608,15 +659,15 @@ function DecisionGame() {
             </div>
             {/* Linear Progress Bar */}
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
-              <div 
+              <div
                 className="bg-gradient-to-r from-blue-500 to-indigo-600 h-3 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${(currentRound / TOTAL_ROUNDS) * 100}%` }}
               />
             </div>
           </div>
-          
+
           {/* Stats Cards with hover effect */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {renderStatImage("CT", stats.CT)}
             {renderStatImage("KT", stats.KT)}
             {renderStatImage("CB", stats.CB)}
@@ -642,7 +693,7 @@ function DecisionGame() {
               </div>
             </div>
           </div>
-          
+
           {/* Description Box */}
           <div className="mb-8 p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg shadow-md">
             <p className="text-lg text-gray-800 leading-relaxed">
@@ -672,10 +723,12 @@ function DecisionGame() {
                 `}
               >
                 <div className="flex items-start gap-3">
-                  <span className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm
-                    ${selectedChoiceIndex === index 
-                      ? "bg-blue-500 text-white" 
-                      : "bg-gray-200 text-gray-700"
+                  <span
+                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm
+                    ${
+                      selectedChoiceIndex === index
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-700"
                     }`}
                   >
                     {String.fromCharCode(65 + index)}
@@ -706,10 +759,18 @@ function DecisionGame() {
                 `}
               >
                 <Send className="w-6 h-6" />
-                Ra Quyết Định 
-                <ArrowRight className={`w-6 h-6 transition-transform ${selectedChoiceIndex !== null ? 'group-hover:translate-x-1' : ''}`} />
+                Ra Quyết Định
+                <ArrowRight
+                  className={`w-6 h-6 transition-transform ${
+                    selectedChoiceIndex !== null
+                      ? "group-hover:translate-x-1"
+                      : ""
+                  }`}
+                />
                 {selectedChoiceIndex !== null && (
-                  <span className="text-xs font-normal opacity-75">(Enter)</span>
+                  <span className="text-xs font-normal opacity-75">
+                    (Enter)
+                  </span>
                 )}
               </button>
             )}
@@ -726,12 +787,14 @@ function DecisionGame() {
                   Kết Quả Quyết Định
                 </h3>
               </div>
-              
+
               <div className="mb-5 p-4 bg-white rounded-xl border border-blue-200 shadow-sm">
                 <p className="text-gray-600 text-sm mb-1">Bạn đã chọn:</p>
-                <p className="text-gray-900 font-bold text-lg">"{result.text}"</p>
+                <p className="text-gray-900 font-bold text-lg">
+                  "{result.text}"
+                </p>
               </div>
-              
+
               {/* Explanation Section */}
               {result.explanation && (
                 <div className="mb-4 p-5 bg-gradient-to-r from-blue-50 to-cyan-50 border-l-4 border-blue-500 rounded-lg shadow-sm">
@@ -743,7 +806,7 @@ function DecisionGame() {
                   </p>
                 </div>
               )}
-              
+
               {/* Historical Example Section */}
               {(result as any).historicalExample && (
                 <div className="mb-4 p-5 bg-gradient-to-r from-amber-50 to-yellow-50 border-l-4 border-amber-500 rounded-lg shadow-sm">
@@ -755,7 +818,7 @@ function DecisionGame() {
                   </p>
                 </div>
               )}
-              
+
               <div className="mb-3">
                 <p className="text-xl font-bold text-gray-800 flex items-center gap-2">
                   <Trophy className="w-6 h-6 text-yellow-500" />
@@ -763,12 +826,12 @@ function DecisionGame() {
                 </p>
               </div>
               {renderImpact(result.impact)}
-              
+
               <button
                 onClick={handleNextScenario}
                 className="group mt-8 flex items-center gap-3 ml-auto px-8 py-4 text-xl font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95"
               >
-                Tiếp Tục 
+                Tiếp Tục
                 <ArrowRight className="w-7 h-7 group-hover:translate-x-2 transition-transform" />
               </button>
             </div>
@@ -782,9 +845,9 @@ function DecisionGame() {
 
   return (
     <div
-  className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat"
-  style={{ backgroundImage: "url('/game/BackgroundGame.png')" }}
->
+      className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/game/BackgroundGame.png')" }}
+    >
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden min-h-[600px] mt-20">
         {showIntro ? (
           <GameIntro onStart={handleStartGame} />
@@ -826,11 +889,13 @@ function DecisionGame() {
           renderGameScreen()
         )}
       </div>
-      
+
       {/* Leaderboard Modal */}
-      <LeaderboardModal 
-        isOpen={showLeaderboardModal} 
-        onClose={() => setGameState(prev => ({ ...prev, showLeaderboardModal: false }))} 
+      <LeaderboardModal
+        isOpen={showLeaderboardModal}
+        onClose={() =>
+          setGameState((prev) => ({ ...prev, showLeaderboardModal: false }))
+        }
       />
     </div>
   );
