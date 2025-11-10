@@ -421,7 +421,7 @@ function DecisionGame() {
         <div className="text-sm font-bold text-gray-700 mb-1">
           {displayName}
         </div>
-        <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-gray-100 shadow-inner">
+        <div className="w-24 h-24 overflow-hidden border-4 border-gray-100 shadow-inner rounded-lg">
           <img
             src={imagePath}
             alt={`${displayName} Level ${value}`}
@@ -616,7 +616,7 @@ function DecisionGame() {
           </div>
           
           {/* Stats Cards with hover effect */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {renderStatImage("CT", stats.CT)}
             {renderStatImage("KT", stats.KT)}
             {renderStatImage("CB", stats.CB)}
